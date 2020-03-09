@@ -19,6 +19,10 @@ namespace MusicManager.DAL.Configuration
 				.WithMany(g => g.Albums)
 				.HasForeignKey(s => s.ArtistId);
 
+			modelBuilder.HasOne(s => s.ImageRef)
+				.WithMany(g => g.Albums)
+				.HasForeignKey(s => s.ImageRefId);
+
 			modelBuilder.Property(s => s.DateAdded)
 				.IsRequired()
 				.HasDefaultValue(DateTime.Now);

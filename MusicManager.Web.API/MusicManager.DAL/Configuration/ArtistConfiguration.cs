@@ -15,6 +15,10 @@ namespace MusicManager.DAL.Configuration
 			modelBuilder
 				.HasKey(s => s.ArtistId);
 
+			modelBuilder.HasOne(s => s.ImageRef)
+				.WithMany(g => g.Artists)
+				.HasForeignKey(s => s.ImageRefId);
+
 			modelBuilder
 				.Property(s => s.Name)
 				.HasMaxLength(300);

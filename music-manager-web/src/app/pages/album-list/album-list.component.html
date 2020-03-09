@@ -1,4 +1,8 @@
 <div style="width:100px;height:100px;display:block;"></div>
 
-fdljkhfsdjk
-sfsjfhsdk
+<div *ngIf="loading">Loading</div>
+<div *ngIf="!loading">
+  <li *ngFor="let album of albums">
+    {{album.name}}
+  </li>
+</div>

@@ -13,10 +13,13 @@ namespace MusicManager.Web.API.MapToDTO
 		{
 			List<AlbumDTO> albumsDTO = albums.Select(s => new AlbumDTO()
 			{
-				AlbumId = s.AlbumId,
-				ArtistId = s.ArtistId,
+				Id = s.AlbumId,
+				ArtistName = s.Artist != null ? s.Artist.Name : "Unknown",
 				Name = s.Name,
-				DateAdded = s.DateAdded
+				Genres = s.AlbumGenres != null ? s.AlbumGenres.Select(s => s.Genre.Name).ToList() : new List<string>(),
+				DateAdded = s.DateAdded,
+				ImageUri = s.ImageRef != null ? s.ImageRef.URI : "",
+				NumberOfTracks = s.Tracks != null ? s.Tracks.Count() : 0
 			}).ToList();
 
 			return albumsDTO;
@@ -26,10 +29,8 @@ namespace MusicManager.Web.API.MapToDTO
 		{
 			List<Album> albums = albumsDTO.Select(s => new Album()
 			{
-				AlbumId = s.AlbumId,
-				ArtistId = s.ArtistId,
-				Name = s.Name,
-				DateAdded = s.DateAdded
+				AlbumId = s.Id,
+				Name = s.Name
 			}).ToList();
 
 			return albums;

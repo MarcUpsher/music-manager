@@ -17,6 +17,6 @@ namespace MusicManager.DAL
 		public DateTime? DateDeleted { get; set; }
 
 		// References
-		public virtual Album Album { get; set; }
+		public Album Album { get; set; }
 	}
 }

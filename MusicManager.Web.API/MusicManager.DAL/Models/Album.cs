@@ -9,6 +9,7 @@ namespace MusicManager.DAL
 	{
 		public int AlbumId { get; set; }
 		public int ArtistId { get; set; }
+		public int? ImageRefId { get; set; }
 		public string Name { get; set; }
 		public DateTime ReleaseDate  { get; set; }
 		public string Summary { get; set; }
@@ -18,6 +19,8 @@ namespace MusicManager.DAL
 
 		//References
 		public Artist Artist { get; set; }
+		public List<Track> Tracks { get; set; }
+		public ImageRef ImageRef { get; set; }
 		public List<AlbumGenre> AlbumGenres { get; set; }
 	}
 }

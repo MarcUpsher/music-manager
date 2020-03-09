@@ -4,17 +4,15 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MusicManager.DAL
 {
-	public class Artist
-	{
-		public int ArtistId {get;set;}
-		public int? ImageRefId { get; set; }
-		public string Name { get; set; }
+	public class ImageRef
+	{		
+		public int ImageRefId { get; set; }
+		public string URI { get; set; }
 		public DateTime DateAdded { get; set; }
-		public DateTime? DateModified { get; set; }
 		public DateTime? DateDeleted { get; set; }
 
 		// References
+		public List<Artist> Artists { get; set; }
 		public List<Album> Albums { get; set; }
-		public ImageRef ImageRef { get; set; }
 	}
 }

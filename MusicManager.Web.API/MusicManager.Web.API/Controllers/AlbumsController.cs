@@ -26,7 +26,13 @@ namespace MusicManager.Web.API.Controllers
 		[HttpGet]
 		public async Task<ActionResult<List<AlbumDTO>>> GetAlbums()
 		{
-			var albums = await _context.Albums.ToListAsync();
+			var albums = await _context.Albums
+				.Include(i => i.Artist)
+				.Include(i => i.ImageRef)
+				.Include(i => i.AlbumGenres)
+					.ThenInclude(it => it.Genre)
+				.Include(i => i.Tracks)
+				.ToListAsync();
 
 			var albumsDTO = AlbumMap.ToDTO(albums);
 

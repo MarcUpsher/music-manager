@@ -23,9 +23,22 @@ namespace MusicManager.Web.API
 
 		public IConfiguration Configuration { get; }
 
+		readonly string AllowedOrigins = "_allowedOrigins";
+
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
+			services.AddCors(options =>
+			{
+				options.AddPolicy(AllowedOrigins,
+				builder =>
+				{
+					builder.WithOrigins("http://localhost:4200", "http://www.contoso.com")
+					.AllowAnyHeader()
+					.AllowAnyMethod();;
+				});
+			});
+
 			services.AddDbContextPool<MusicManagerContext>(options => options.UseSqlServer(Configuration.GetConnectionString("sqlConnection")));
 
 			services.AddControllers();
@@ -43,6 +56,8 @@ namespace MusicManager.Web.API
 			app.UseRouting();
 
 			app.UseAuthorization();
+
+			app.UseCors(AllowedOrigins);
 
 			app.UseEndpoints(endpoints =>
 			{
