@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AlbumService } from './album-list.service';
-import { Album } from 'src/models/album';
+import { AlbumService } from '../album.service';
+import { Album } from '../../../models/album';
+import { LoaderComponent } from '../../../components/loader/loader.component';
+import { AlbumCardComponent } from '../../../components/album-card/album-card.component';
 
 @Component({
   selector: 'app-album-list',
@@ -18,7 +20,6 @@ export class AlbumListComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('here');
     this.getAlbums();
   }
 

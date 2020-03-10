@@ -11,7 +11,7 @@ using MusicManager.Web.API.MapToDTO;
 
 namespace MusicManager.Web.API.Controllers
 {
-	[Route("api/album")]
+	[Route("api/albums")]
 	[ApiController]
 	public class AlbumsController : ControllerBase
 	{
@@ -26,31 +26,27 @@ namespace MusicManager.Web.API.Controllers
 		[HttpGet]
 		public async Task<ActionResult<List<AlbumDTO>>> GetAlbums()
 		{
-			var albums = await _context.Albums
-				.Include(i => i.Artist)
-				.Include(i => i.ImageRef)
-				.Include(i => i.AlbumGenres)
-					.ThenInclude(it => it.Genre)
-				.Include(i => i.Tracks)
-				.ToListAsync();
+			var albums = await QueryGetAlbumsAsync();
 
-			var albumsDTO = AlbumMap.ToDTO(albums);
+			var albumsDTO = AlbumMap.ListToDTO(albums);
 
 			return albumsDTO;
 		}
 
 		// GET: api/Albums/5
 		[HttpGet("{id}")]
-		public async Task<ActionResult<Album>> GetAlbum(int id)
+		public async Task<ActionResult<AlbumDTO>> GetAlbum(int id)
 		{
-			var album = await _context.Albums.FindAsync(id);
+			var album = await QueryGetAlbumAsync(id);
 
 			if (album == null)
 			{
 				return NotFound();
 			}
 
-			return album;
+			var albumDTO = AlbumMap.ToDTO(album);
+
+			return albumDTO;
 		}
 
 		// PUT: api/Albums/5
@@ -116,6 +112,35 @@ namespace MusicManager.Web.API.Controllers
 		private bool AlbumExists(int id)
 		{
 			return _context.Albums.Any(e => e.AlbumId == id);
+		}
+
+		public async Task<List<Album>> QueryGetAlbumsAsync()
+		{
+			var query = _context.Albums.AsQueryable();
+
+			query = QueryGetAlbumFilters(query);
+
+			return await query.ToListAsync();
+		}
+
+		public async Task<Album> QueryGetAlbumAsync(int id)
+		{
+			var query = _context.Albums
+				.Where(w => w.AlbumId == id).AsQueryable();
+
+			query = QueryGetAlbumFilters(query);
+
+			return await query.FirstOrDefaultAsync();
+		}
+
+		public IQueryable<Album> QueryGetAlbumFilters(IQueryable<Album> query)
+		{
+			return query.Where(w => w.DateDeleted == null)
+				.Include(i => i.Artist)
+				.Include(i => i.ImageRef)
+				.Include(i => i.AlbumGenres)
+					.ThenInclude(it => it.Genre)
+				.Include(i => i.Tracks);
 		}
 	}
 }

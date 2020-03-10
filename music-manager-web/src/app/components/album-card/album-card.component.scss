@@ -1,0 +1,10 @@
+@import '~@angular/material/theming';
+
+.album-card {
+  width:320px;
+  @include mat-elevation(2);
+
+  .mat-card-image {
+    max-width:300px;
+  }
+}

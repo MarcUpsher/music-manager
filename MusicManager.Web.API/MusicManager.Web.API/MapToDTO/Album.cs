@@ -7,33 +7,31 @@ using System.Threading.Tasks;
 
 namespace MusicManager.Web.API.MapToDTO
 {
-	public class AlbumMap
+	public static class AlbumMap
 	{
-		public static List<AlbumDTO> ToDTO(List<Album> albums)
+		public static List<AlbumDTO> ListToDTO(List<Album> albums)
 		{
-			List<AlbumDTO> albumsDTO = albums.Select(s => new AlbumDTO()
-			{
-				Id = s.AlbumId,
-				ArtistName = s.Artist != null ? s.Artist.Name : "Unknown",
-				Name = s.Name,
-				Genres = s.AlbumGenres != null ? s.AlbumGenres.Select(s => s.Genre.Name).ToList() : new List<string>(),
-				DateAdded = s.DateAdded,
-				ImageUri = s.ImageRef != null ? s.ImageRef.URI : "",
-				NumberOfTracks = s.Tracks != null ? s.Tracks.Count() : 0
-			}).ToList();
+			List<AlbumDTO> albumsDTO = albums.Select(album => ToDTO(album)).ToList();
 
 			return albumsDTO;
 		}
 
-		public static List<Album> FromDTO(List<AlbumDTO> albumsDTO)
+		public static AlbumDTO ToDTO(Album album)
 		{
-			List<Album> albums = albumsDTO.Select(s => new Album()
+			return new AlbumDTO()
 			{
-				AlbumId = s.Id,
-				Name = s.Name
-			}).ToList();
-
-			return albums;
+				Id = album.AlbumId,
+				ArtistId = album.Artist != null ? album.Artist.ArtistId : 0,
+				ArtistName = album.Artist != null ? album.Artist.Name : "Unknown",
+				Name = album.Name,
+				Summary = album.Summary,
+				ReleaseDate = album.ReleaseDate,
+				Genres = album.AlbumGenres != null ? album.AlbumGenres.Select(s => s.Genre.Name).ToList() : new List<string>(),
+				DateAdded = album.DateAdded,
+				ImageUri = album.ImageRef != null ? Helpers.GetImageUri(album.ImageRef.URI) : "",
+				NumberOfTracks = album.Tracks != null ? album.Tracks.Count() : 0,
+				Tracks = TrackMap.ListToDTO(album.Tracks)
+			};
 		}
 	}
 }

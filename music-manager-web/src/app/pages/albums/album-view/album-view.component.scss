@@ -1,0 +1,13 @@
+//@import '~@angular/material/theming';
+
+.header-container {
+  display: flex;
+  .left{
+    .image {
+      max-width:300px;
+    }
+  }
+  .right {    
+    padding-left:1em;
+  }
+}

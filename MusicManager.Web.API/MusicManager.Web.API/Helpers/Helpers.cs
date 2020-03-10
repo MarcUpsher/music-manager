@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MusicManager.Web.API.Helpers
+namespace MusicManager.Web.API
 {
 	public static class Helpers
 	{
@@ -31,29 +31,10 @@ namespace MusicManager.Web.API.Helpers
       }
       return webHost;
     }
-  }
 
-  public static class MigrationManager
-  {
-    public static IHost MigrateDatabase(this IHost host)
+    public static string GetImageUri(string uri)
     {
-      using (var scope = host.Services.CreateScope())
-      {
-        using (var appContext = scope.ServiceProvider.GetRequiredService<MusicManagerContext>())
-        {
-          try
-          {
-            appContext.Database.Migrate();
-          }
-          catch (Exception ex)
-          {
-            //Log errors or do anything you think it's needed
-            throw;
-          }
-        }
-      }
-
-      return host;
+      return "http://localhost:5000/" + uri;
     }
-  }
+  }  
 }

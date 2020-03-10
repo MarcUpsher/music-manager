@@ -7,8 +7,8 @@ namespace MusicManager.DAL
 	public class Track
 	{
 		[Key]
-		public int TrackId {get;set;}
-		public int AlbumId { get; set; }		
+		public int TrackId { get; set; }
+		public int AlbumId { get; set; }
 		public int Position { get; set; }
 		public int Duration { get; set; }
 		public string Name { get; set; }

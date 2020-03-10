@@ -1,0 +1,23 @@
+<app-loader *ngIf="loading"></app-loader>
+<div *ngIf="!loading">
+  <div class="header-container">
+    <div class="left">
+      <div class="image">
+        <img mat-card-image src="{{album.imageUri}}" alt="{{album.name}}">
+      </div>
+    </div>
+    <div class="right">
+      <div class="title">{{album.name}}</div>
+      <div class="subtitle">{{album.artistName}}</div>
+      <div class="release-date">{{album.releaseDate | date: 'mediumDate'}}</div>
+      <div class="summary">{{album.summary}}</div>
+    </div>
+  </div>
+
+  <div *ngFor="let track of album.tracks" >
+    <div>{{track.name}}</div>
+    <div>{{track.duration | duration}}</div>
+  </div>
+
+
+</div>

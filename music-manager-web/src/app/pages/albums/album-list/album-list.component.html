@@ -1,0 +1,13 @@
+<app-loader *ngIf="loading"></app-loader>
+<div *ngIf="!loading">
+
+  <mat-grid-list cols="6" rowHeight="460px">
+    <mat-grid-tile
+        *ngFor="let album of albums"
+        [colspan]="1"
+        [rowspan]="1">
+        <app-album-card [album]="album"></app-album-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+</div>
