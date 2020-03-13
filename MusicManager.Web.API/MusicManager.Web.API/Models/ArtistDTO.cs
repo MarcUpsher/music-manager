@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MusicManager.Web.API.DTO
 {
-	public class AlbumDTO
+	public class ArtistDTO
 	{
 		public int Id { get; set; }
 		public string Name { get; set; }
@@ -15,18 +15,6 @@ namespace MusicManager.Web.API.DTO
 		public int NumberOfTracks { get; set; }
 		public List<string> Genres { get; set; }
 		public DateTime DateAdded { get; set; }
-		public List<TrackDTO> Tracks { get; set; }
-	}
-
-	public class AlbumPostDTO
-	{
-		public string Id { get; set; }		
-		public string Name { get; set; }
-		public string ArtistId { get; set; }
-		public string Summary { get; set; }
-		public DateTime ReleaseDate { get; set; }
-		public string ImageUri { get; set; }
-		public List<string> Genres { get; set; }
 		public List<TrackDTO> Tracks { get; set; }
 	}
 }

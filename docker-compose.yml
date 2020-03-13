@@ -5,6 +5,16 @@ networks:
     driver: bridge
 
 services:
+    frontend:
+        build: 
+            context: ./music-manager-web
+            dockerfile: Dockerfile
+        networks:
+            - overlay
+        ports:
+            - "4200:80"
+        depends_on:
+            - web
     web:
         build: 
             context: .
@@ -12,7 +22,7 @@ services:
         networks:
             - overlay
         ports:
-            - "8000:80"
+            - "5000:80"
         depends_on:
             - sql-server-db
     sql-server-db:

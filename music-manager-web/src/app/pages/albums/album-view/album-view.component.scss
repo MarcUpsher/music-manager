@@ -1,13 +1,50 @@
 //@import '~@angular/material/theming';
 
+.internal-grid{
+  width:100%;
+  height:100%;
+}
+
+.mat-card-image {
+  max-width:300px;
+}
+
 .header-container {
   display: flex;
   .left{
     .image {
-      max-width:300px;
+      width: 300px;
+      height: auto;
+      display: block;
+      padding: 10px;
+      .mat-card-image {
+        max-width:300px;
+        margin:0;
+      }    
     }
   }
   .right {    
     padding-left:1em;
   }
+
+  .title {
+    h1 {
+      margin-bottom:0.2em;
+    }
+  }
+  .subtitle {
+    h3 {
+      margin-bottom:1em;
+    }
+  }
+  .release-date {
+    padding-bottom:1em;
+  }
+  .summary {
+    padding-bottom:1em;
+  }
+}
+
+.mat-table {
+  width:50%;
 }

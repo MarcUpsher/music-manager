@@ -11,19 +11,17 @@ namespace MusicManager.Web.API.MapToDTO
 	{
 		public static List<TrackDTO> ListToDTO(List<Track> tracks)
 		{
-			List<TrackDTO> trackDTO = tracks.Select(s => ToDTO(s)).ToList();
-
-			return trackDTO;
+			return tracks.Select(s => ToDTO(s)).ToList();
 		}
 
 		public static TrackDTO ToDTO(Track track)
 		{
 			return new TrackDTO()
 			{
-				Id = track.TrackId,
+				Id = track.TrackId.ToString(),
 				Name = track.Name,
-				Position = track.Position,
-				Duration = track.Duration
+				Position = track.Position.ToString(),
+				Duration = track.Duration.ToString()
 			};
 		}
 	}

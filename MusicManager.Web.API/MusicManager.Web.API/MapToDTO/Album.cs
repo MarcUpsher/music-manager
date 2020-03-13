@@ -11,9 +11,7 @@ namespace MusicManager.Web.API.MapToDTO
 	{
 		public static List<AlbumDTO> ListToDTO(List<Album> albums)
 		{
-			List<AlbumDTO> albumsDTO = albums.Select(album => ToDTO(album)).ToList();
-
-			return albumsDTO;
+			return albums.Select(album => ToDTO(album)).ToList();
 		}
 
 		public static AlbumDTO ToDTO(Album album)
@@ -31,6 +29,18 @@ namespace MusicManager.Web.API.MapToDTO
 				ImageUri = album.ImageRef != null ? Helpers.GetImageUri(album.ImageRef.URI) : "",
 				NumberOfTracks = album.Tracks != null ? album.Tracks.Count() : 0,
 				Tracks = TrackMap.ListToDTO(album.Tracks)
+			};
+		}
+
+		internal static Album FromDTO(AlbumPostDTO albumPostDTO)
+		{
+			return new Album()
+			{
+				AlbumId = int.Parse(albumPostDTO.Id),
+				ArtistId = int.Parse(albumPostDTO.ArtistId),
+				Name = albumPostDTO.Name,
+				Summary = albumPostDTO.Summary,
+				ReleaseDate = albumPostDTO.ReleaseDate
 			};
 		}
 	}

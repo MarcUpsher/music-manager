@@ -13,3 +13,14 @@ export class Album {
   genres: string[];
   dateAdded: Date;
 }
+
+export class AlbumPost {
+  id: string;
+  name: string;
+  artistId: string;
+  imageUri: string;
+  summary: string;
+  releaseDate: Date;
+  tracks: Track[];
+  genres: string[];
+}

@@ -4,3 +4,10 @@ export class Track {
   position: number;
   duration: number;
 }
+
+export class TrackDTO {
+  id: string;
+  name: string;
+  position: string;
+  duration: string;
+}

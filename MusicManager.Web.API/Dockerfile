@@ -30,4 +30,6 @@ RUN dotnet publish -c Release -o /app
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app .
-ENTRYPOINT ["dotnet", "MusicManager.Web.API.dll"]
+#ENTRYPOINT ["dotnet", "MusicManager.Web.API.dll"]
+
+ENTRYPOINT [ "dotnet", "MusicManager.Web.API.dll", "--server.urls", "https://0.0.0.0:5000"]

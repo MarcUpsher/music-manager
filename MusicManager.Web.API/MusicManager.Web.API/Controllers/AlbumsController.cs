@@ -53,14 +53,50 @@ namespace MusicManager.Web.API.Controllers
 		// To protect from overposting attacks, please enable the specific properties you want to bind to, for
 		// more details see https://aka.ms/RazorPagesCRUD.
 		[HttpPut("{id}")]
-		public async Task<IActionResult> PutAlbum(int id, Album album)
+		public async Task<IActionResult> PutAlbum(int id, AlbumPostDTO albumPostDTO)
 		{
-			if (id != album.AlbumId)
+			if (id != int.Parse(albumPostDTO.Id))
 			{
 				return BadRequest();
 			}
 
-			_context.Entry(album).State = EntityState.Modified;
+			Album existingAlbum = await QueryGetAlbumAsync(id);
+
+			existingAlbum.ArtistId = int.Parse(albumPostDTO.ArtistId);
+			existingAlbum.Name = albumPostDTO.Name;
+			existingAlbum.ReleaseDate = albumPostDTO.ReleaseDate;
+			existingAlbum.Summary = albumPostDTO.Summary;
+
+			foreach (var existingTrack in existingAlbum.Tracks)
+			{
+				existingTrack.DateDeleted = DateTime.Now;
+			}
+
+			foreach (var track in albumPostDTO.Tracks)
+			{
+				var existingTrack = existingAlbum.Tracks.Where(w => w.TrackId == int.Parse(track.Id)).FirstOrDefault();
+
+				if (existingTrack != null)
+				{
+					existingTrack.DateDeleted = null;
+					existingTrack.Position = int.Parse(track.Position);
+					existingTrack.Name = track.Name;
+					existingTrack.Duration = int.Parse(track.Duration);
+				}
+				else
+				{
+					existingAlbum.Tracks.Add(new Track()
+					{
+						Position = int.Parse(track.Position),
+						Name = track.Name,
+						Duration = int.Parse(track.Duration)
+					});
+				}
+			}
+
+			// Update image URI
+
+			_context.Entry(existingAlbum).State = EntityState.Modified;
 
 			try
 			{

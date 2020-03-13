@@ -1,44 +1,40 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
-import { Album, AlbumPost } from '../../models/album';
 import { environment } from '../../../environments/environment';
+import { Artist } from '../../models/artist';
+import { FilterItem } from 'src/app/models/filter-item';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AlbumService {
+export class ArtistService {
 
   url = '';
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json; charset=utf-8'
-    })
-  };
 
   constructor(private httpClient: HttpClient) {
     this.url = environment.url;
   }
 
-  getAlbums(): Observable<Album[]> {
-    return this.httpClient.get<Album[]>(this.url + '/api/albums/')
+  getArtists(): Observable<Artist[]> {
+    return this.httpClient.get<Artist[]>(this.url + '/api/artists/')
     .pipe(
       retry(1),
       catchError(this.errorHandler)
     );
   }
 
-  getAlbum(id: number): Observable<Album> {
-    return this.httpClient.get<Album>(this.url + '/api/albums/' + id)
+  getArtist(id: number): Observable<Artist> {
+    return this.httpClient.get<Artist>(this.url + '/api/artists/' + id)
     .pipe(
       retry(1),
       catchError(this.errorHandler)
     );
   }
 
-  updateAlbum(id: number, data: AlbumPost): Observable<any> {
-    return this.httpClient.put(this.url + '/api/albums/' + id, data, this.httpOptions)
+  getArtistsForFilter(): Observable<FilterItem[]> {
+    return this.httpClient.get<FilterItem[]>(this.url + '/api/artistsforfilter')
     .pipe(
       retry(1),
       catchError(this.errorHandler)

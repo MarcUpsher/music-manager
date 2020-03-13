@@ -10,9 +10,13 @@ import { LoaderComponent } from './components/loader/loader.component';
 import { AppComponent } from './app.component';
 import { AlbumListComponent } from './pages/albums/album-list/album-list.component';
 import { AlbumViewComponent } from './pages/albums/album-view/album-view.component';
+import { AlbumEditComponent } from './pages/albums/album-edit/album-edit.component';
 import { AlbumCardComponent } from './components/album-card/album-card.component';
 
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { ReactiveFormsModule } from '@angular/forms';
 import { DurationPipe } from './pipes/duration.pipe';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   imports: [
@@ -20,6 +24,7 @@ import { DurationPipe } from './pipes/duration.pipe';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    ReactiveFormsModule,
     MaterialModule
   ],
   declarations: [
@@ -28,10 +33,14 @@ import { DurationPipe } from './pipes/duration.pipe';
     AlbumListComponent,
     AlbumViewComponent,
     AlbumCardComponent,
+    AlbumEditComponent,
+    ConfirmDialogComponent,
     DurationPipe
   ],
 
-  providers: [],
+  providers: [
+    MatNativeDateModule
+  ],
   bootstrap: [
     AppComponent
   ]

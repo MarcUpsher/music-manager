@@ -1,0 +1,122 @@
+<app-loader *ngIf="loading"></app-loader>
+<div *ngIf="!loading">
+  <div>
+    <button mat-stroked-button color="primary" [routerLink]="['/album/',this.albumId]">Cancel</button>
+  </div>
+  <form [formGroup]="albumForm" class="album-form">
+    <mat-grid-list cols="2" rowHeight="1:1">
+      <mat-grid-tile>
+        <div class="internal-grid">
+          <mat-grid-list cols="2" rowHeight="1:1">
+            <mat-grid-tile>
+              <mat-card>
+                <div class="image">
+                  <img mat-card-image src="{{album.imageUri}}" alt="{{album.name}}">
+                </div>
+              </mat-card>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-card>
+                <mat-form-field class="">
+                  <mat-label>Album name</mat-label>
+                  <input matInput placeholder="Name" formControlName="name">
+                </mat-form-field>
+
+                <mat-form-field>
+                  <mat-label>Artist</mat-label>
+                  <input type="text" matInput formControlName="artist" [matAutocomplete]="auto">
+                  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                    <mat-option *ngFor="let item of filteredArtists | async" [value]="item">{{item.name}}</mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+
+                <mat-form-field>
+                  <mat-label>Release Date</mat-label>
+                  <input matInput [matDatepicker]="picker" formControlName="releaseDate">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field class="">
+                  <mat-label>Genres</mat-label>
+                  <input matInput placeholder="Genres" formControlName="genres">
+                </mat-form-field>
+
+                <mat-form-field class="">
+                  <mat-label>Summary</mat-label>
+                  <textarea matInput placeholder="Genres" formControlName="summary"></textarea>
+                </mat-form-field>
+
+                <mat-card-actions>
+                  <button mat-raised-button color="primary" (click)="formSubmit()">Save</button>
+                </mat-card-actions>
+
+              </mat-card>
+            </mat-grid-tile>
+          </mat-grid-list>
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile class="tracks-tile">
+        <div class="internal-grid">
+          <ng-container formArrayName="tracks">
+            <h3>Tracks</h3> <button mat-stroked-button color="primary" (click)="addTrack()">Add track</button>
+
+            <table mat-table [dataSource]="tracks.controls" class="mat-elevation-z8"
+              (cdkDropListDropped)="onListDrop($event)" cdkDropList>
+
+              <ng-container matColumnDef="drag">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let element; let i = index;" [formGroupName]="i">
+                  <div class="handle" cdkDragHandle>
+                    <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+                      <path
+                        d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z">
+                      </path>
+                      <path d="M0 0h24v24H0z" fill="none"></path>
+                    </svg>
+                  </div>
+                </td>
+
+              </ng-container>
+
+              <ng-container matColumnDef="position">
+                <th mat-header-cell *matHeaderCellDef> No </th>
+                <td mat-cell *matCellDef="let element; let i = index;" [formGroupName]="i">
+                  {{element.value.position}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> Name </th>
+                <td mat-cell *matCellDef="let element; let i = index;" [formGroupName]="i">
+                  <mat-form-field>
+                    <input matInput formControlName="name" placeholder="Name" value="{{element.value.name}}">
+                  </mat-form-field>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="duration">
+                <th mat-header-cell *matHeaderCellDef> Duration </th>
+                <td mat-cell *matCellDef="let element; let i = index;" [formGroupName]="i">
+                  <mat-form-field>
+                    <input matInput type="number" formControlName="duration" placeholder="Duration" value="{{element.value.duration}} ">
+                  </mat-form-field>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef> Delete </th>
+                <td mat-cell *matCellDef="let element; let i = index;" [formGroupName]="i">
+                  <button mat-flat-button color="primary" (click)="removeTrack(i)">Delete</button>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;" cdkDrag></tr>
+
+            </table>
+          </ng-container>
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </form>
+</div>
