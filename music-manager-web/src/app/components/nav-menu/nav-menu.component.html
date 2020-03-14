@@ -1,0 +1,9 @@
+<mat-nav-list>
+  <ng-container *ngFor="let section of sections">
+    <h3 matSubheader>{{section.name}}</h3>
+    <mat-list-item *ngFor="let link of section.links">
+      <a matLine routerLink="{{ link.href }}" routerLinkActive="active">{{ link.name }}</a>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+  </ng-container>
+</mat-nav-list>

@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AlbumService } from '../album.service';
 import { ArtistService } from '../../artists/artist.service';
 import { Album, AlbumPost } from '../../../models/album';
-import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { Track } from 'src/app/models/track';
 import { FilterItem } from 'src/app/models/filter-item';
 import { Observable } from 'rxjs';
@@ -163,7 +163,7 @@ export class AlbumEditComponent implements OnInit {
       genres: []
     };
 
-    console.info(albumPost);
+    console.log(albumPost);
 
     this.albumService.updateAlbum(this.albumId, albumPost).subscribe((data: Album) => {
       this.router.navigate(['album', this.albumId]);

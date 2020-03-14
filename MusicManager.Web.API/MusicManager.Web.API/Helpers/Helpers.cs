@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -30,6 +31,13 @@ namespace MusicManager.Web.API
         }
       }
       return webHost;
+    }
+
+    public static List<string> GetErrorMessages(this ModelStateDictionary dictionary)
+    {
+      return dictionary.SelectMany(m => m.Value.Errors)
+                       .Select(m => m.ErrorMessage)
+                       .ToList();
     }
 
     public static string GetImageUri(string uri)

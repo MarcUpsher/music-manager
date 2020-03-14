@@ -8,7 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using MusicManager.DAL;
+using MusicManager.Web.API.Database.Contexts;
 
 namespace MusicManager.Web.API
 {

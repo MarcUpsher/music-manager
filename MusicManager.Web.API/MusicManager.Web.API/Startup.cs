@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +11,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using MusicManager.DAL;
+using MusicManager.Web.API.Database.Contexts;
+using MusicManager.Web.API.Database.Repositories;
+using MusicManager.Web.API.Domain.Repositories;
+using MusicManager.Web.API.Domain.Services;
+using MusicManager.Web.API.Services;
 
 namespace MusicManager.Web.API
 {
@@ -28,20 +33,28 @@ namespace MusicManager.Web.API
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
+			services.AddDbContextPool<MusicManagerContext>(options =>
+				options.UseSqlServer(Configuration.GetConnectionString("sqlConnection"),
+				providerOptions => providerOptions.EnableRetryOnFailure()));
+
+			services.AddScoped<IGenreService, GenreService>();
+			services.AddScoped<IGenreRepository, GenreRepository>();
+			services.AddScoped<IUnitOfWork, UnitOfWork>();
+
 			services.AddCors(options =>
 			{
 				options.AddPolicy(AllowedOrigins,
 				builder =>
 				{
-					builder.WithOrigins("http://localhost:4200", "http://www.contoso.com")
+					builder.WithOrigins("http://localhost:4200")
 					.AllowAnyHeader()
-					.AllowAnyMethod();;
+					.AllowAnyMethod(); ;
 				});
 			});
 
-			services.AddDbContextPool<MusicManagerContext>(options => options.UseSqlServer(Configuration.GetConnectionString("sqlConnection")));
-
 			services.AddControllers();
+
+			services.AddAutoMapper(typeof(Startup));
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,7 +1,18 @@
-<mat-toolbar color="primary">
-  <span>{{ title }}</span>
-</mat-toolbar>
+<mat-sidenav-container class="nav-menu-container">
+  <mat-sidenav #sidenav mode="over" [(opened)]="opened" (click)="sidenav.toggle()">
+    <app-nav-menu></app-nav-menu>>
+  </mat-sidenav>
 
-<div class="app-content-container">
-  <router-outlet></router-outlet>
-</div>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button mat-icon-button (click)="openSidenav()">
+        <mat-icon aria-hidden="false" aria-label="Menu">menu</mat-icon>
+      </button>
+      <div class="title">{{ title }}</div>
+    </mat-toolbar>
+    
+    <div class="app-content-container">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

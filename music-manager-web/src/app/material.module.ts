@@ -12,6 +12,10 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatListModule } from '@angular/material/list';
 
 const materialModules = [
   MatTableModule,
@@ -25,7 +29,11 @@ const materialModules = [
   MatAutocompleteModule,
   DragDropModule,
   MatDatepickerModule,
-  MatNativeDateModule
+  MatNativeDateModule,
+  MatIconModule,
+  MatSidenavModule,
+  MatMenuModule,
+  MatListModule
 ];
 
 @NgModule({

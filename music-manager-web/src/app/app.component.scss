@@ -1,3 +1,17 @@
 .app-content-container {
   margin:0 1em 0 1em;
 }
+
+html, body, material-app, mat-sidenav-container {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+
+mat-sidenav {
+  width: 200px;
+}
+
+.title {
+  margin-left:2em;
+}
