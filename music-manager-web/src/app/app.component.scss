@@ -1,6 +1,4 @@
-.app-content-container {
-  margin:0 1em 0 1em;
-}
+@import '~@angular/material/theming';
 
 html, body, material-app, mat-sidenav-container {
   height: 100%;
@@ -13,5 +11,20 @@ mat-sidenav {
 }
 
 .title {
-  margin-left:2em;
+  margin-left:2em;  
+}
+
+.page-actions {
+  box-shadow:none !important;
+  display:flex !important;
+  justify-content: flex-end !important;
+  background: none !important;
+}
+
+.app-content {
+  margin:1em 1em 0 1em;
+}
+
+table {
+  width: 100%;
 }

@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
@@ -8,6 +8,7 @@ import { MaterialModule } from './material.module';
 
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { LoaderComponent } from './components/loader/loader.component';
+import { PageHeaderComponent } from './components/page-header/page-header.component';
 import { AppComponent } from './app.component';
 import { AlbumListComponent } from './pages/albums/album-list/album-list.component';
 import { AlbumViewComponent } from './pages/albums/album-view/album-view.component';
@@ -43,6 +44,7 @@ import { MatNativeDateModule } from '@angular/material/core';
   declarations: [
     NavMenuComponent,
     LoaderComponent,
+    PageHeaderComponent,
     AppComponent,
     AlbumListComponent,
     AlbumViewComponent,
@@ -66,6 +68,9 @@ import { MatNativeDateModule } from '@angular/material/core';
   ],
   bootstrap: [
     AppComponent
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
   ]
 })
 export class AppModule { }

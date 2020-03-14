@@ -17,7 +17,7 @@ export class GenreService {
   }
 
   getGenres(): Observable<Genre[]> {
-    return this.httpClient.get<Genre[]>(this.url + '/api/genres/')
+    return this.httpClient.get<Genre[]>(this.url + '/api/genres')
     .pipe(
       retry(1),
       catchError(this.errorHandler)

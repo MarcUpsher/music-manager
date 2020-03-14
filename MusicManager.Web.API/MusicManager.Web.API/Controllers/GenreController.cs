@@ -2,14 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using MusicManager.Web.API.Database.Contexts;
 using MusicManager.Web.API.Domain.Models;
 using MusicManager.Web.API.Domain.Services;
 using MusicManager.Web.API.Domain.Models.DTO;
-using MusicManager.Web.API.MapToDTO;
 using AutoMapper;
 
 namespace MusicManager.Web.API.Controllers
@@ -35,6 +31,24 @@ namespace MusicManager.Web.API.Controllers
 			var genresDto = _mapper.Map<IEnumerable<Genre>, IEnumerable<GenreDTO>>(genres);
 
 			return genresDto;
+		}
+
+		[HttpGet("{id}")]
+		public async Task<IActionResult> GetAsync(int id)
+		{
+			if (!ModelState.IsValid)
+				return BadRequest(ModelState.GetErrorMessages());
+			
+			var result = await _genreService.GetByIdAsync(id);
+
+			if (!result.Success)
+			{
+				return BadRequest(result.Message);
+			}
+
+			var genreDTO = _mapper.Map<Genre, GenreDTO>(result.Genre);
+
+			return Ok(genreDTO);
 		}
 
 		[HttpPost]

@@ -30,6 +30,18 @@ namespace MusicManager.Web.API.Services
 			return await _genreRepository.ListActiveAsync();
 		}
 
+		public async Task<GenreResponse> GetByIdAsync(int id)
+		{
+			var existingGenre = await _genreRepository.FindByIdAsync(id);
+
+			if (existingGenre == null)
+			{
+				return new GenreResponse("Genre not found.");
+			}
+
+			return new GenreResponse(existingGenre);
+		}
+
 		public async Task<GenreResponse> SaveAsync(Genre genre)
 		{
 			try

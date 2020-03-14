@@ -14,5 +14,6 @@ namespace MusicManager.Web.API.Domain.Services
 		Task<GenreResponse> SaveAsync(Genre genre);
 		Task<GenreResponse> UpdateAsync(int id, Genre genre);
 		Task<GenreResponse> DeleteAsync(int id);
+		Task<GenreResponse> GetByIdAsync(int id);
 	}
 }
