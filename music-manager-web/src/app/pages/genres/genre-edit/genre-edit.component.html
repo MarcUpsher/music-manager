@@ -1,15 +1,21 @@
 <app-loader *ngIf="loading"></app-loader>
 <div *ngIf="!loading">
-  <app-page-header [title]=""></app-page-header>
-
+  <h2 mat-dialog-title>{{title}}</h2>
   <form [formGroup]="genreForm" class="form" (ngSubmit)="submit()">
-
-    <mat-form-field class="full-width">
-      <input matInput placeholder="Name" formControlName="name">
-    </mat-form-field>
-
-    <div class="button-wrapper">
-      <button mat-flat-button color="primary">Save</button>
-    </div>
+    <mat-dialog-content>
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Name" formControlName="name">
+        <mat-error *ngIf="errorHandling('name', 'required')">
+          You must provide a name
+        </mat-error>
+        <mat-error *ngIf="(name.dirty || name.touched) && errorHandling('name', 'invalidName')">
+          This name has already been used.
+        </mat-error>
+      </mat-form-field>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+      <button mat-button mat-dialog-close>Cancel</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="isFormInvalid()">Save</button>
+    </mat-dialog-actions>
   </form>
 </div>

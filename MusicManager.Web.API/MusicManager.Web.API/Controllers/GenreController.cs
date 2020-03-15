@@ -34,7 +34,7 @@ namespace MusicManager.Web.API.Controllers
 		}
 
 		[HttpGet("{id}")]
-		public async Task<IActionResult> GetAsync(int id)
+		public async Task<IActionResult> GetAsyncById(int id)
 		{
 			if (!ModelState.IsValid)
 				return BadRequest(ModelState.GetErrorMessages());
@@ -49,6 +49,21 @@ namespace MusicManager.Web.API.Controllers
 			var genreDTO = _mapper.Map<Genre, GenreDTO>(result.Genre);
 
 			return Ok(genreDTO);
+		}
+
+		[HttpGet("doesgenreexist")]
+		public async Task<IActionResult> GetAsyncByName(string name)
+		{
+			if (string.IsNullOrEmpty(name))
+			{
+				return Ok(false);
+			}			
+
+			var genre = await _genreService.GetByNameAsync(name);
+
+			var result = genre != null ? true : false;
+
+			return Ok(result);
 		}
 
 		[HttpPost]

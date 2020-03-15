@@ -23,7 +23,10 @@ namespace MusicManager.Web.API.Database.Repositories
 
 		public async Task<IEnumerable<Genre>> ListActiveAsync()
 		{
-			return await _context.Genres.Where(w => w.DateDeleted == null).ToListAsync();
+			return await _context.Genres
+									.Where(w => w.DateDeleted == null)
+									.Include(i => i.AlbumGenres)
+									.ToListAsync();
 		}
 
 		public async Task AddAsync(Genre genre)
@@ -34,6 +37,13 @@ namespace MusicManager.Web.API.Database.Repositories
 		public async Task<Genre> FindByIdAsync(int id)
 		{
 			return await _context.Genres.FindAsync(id);
+		}
+
+		public async Task<Genre> FindByNameAsync(string name)
+		{
+			return await _context.Genres
+				.Where(w => w.Name.ToLower() == name.ToLower() && w.DateDeleted == null)
+				.FirstOrDefaultAsync();
 		}
 
 		public void Update(Genre genre)

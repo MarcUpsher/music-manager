@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { retry, catchError } from 'rxjs/operators';
+import { retry, catchError, map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
-import { Genre } from '../../models/genre';
+import { Genre, GenrePostDTO } from '../../models/genre';
 import { FilterItem } from 'src/app/models/filter-item';
 
 @Injectable({
@@ -34,6 +34,38 @@ export class GenreService {
 
   getGenresForFilter(): Observable<FilterItem[]> {
     return this.httpClient.get<FilterItem[]>(this.url + '/api/genresforfilter')
+    .pipe(
+      retry(1),
+      catchError(this.errorHandler)
+    );
+  }
+
+  addGenre(genrePostDTO: GenrePostDTO): Observable<Genre> {
+    return this.httpClient.post<Genre>(this.url + '/api/genres', genrePostDTO)
+    .pipe(
+      retry(1),
+      catchError(this.errorHandler)
+    );
+  }
+
+  updateGenre(id: number, genrePostDTO: GenrePostDTO): Observable<Genre> {
+    return this.httpClient.put<Genre>(this.url + '/api/genres/' + id, genrePostDTO)
+    .pipe(
+      retry(1),
+      catchError(this.errorHandler)
+    );
+  }
+
+  doesGenreExist(name: string): Observable<boolean> {
+    return this.httpClient.get<boolean>(this.url + '/api/genres/doesgenreexist?name=' + encodeURI(name))
+    .pipe(
+      retry(1),
+      catchError(this.errorHandler)
+    );
+  }
+
+  deleteGenre(id: number): Observable<Genre> {
+    return this.httpClient.delete<Genre>(this.url + '/api/genres/' + id)
     .pipe(
       retry(1),
       catchError(this.errorHandler)

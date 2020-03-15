@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
-import { Artist } from '../../models/artist';
+import { Artist, ArtistWithAlbums } from '../../models/artist';
 import { FilterItem } from 'src/app/models/filter-item';
 
 @Injectable({
@@ -25,8 +25,8 @@ export class ArtistService {
     );
   }
 
-  getArtist(id: number): Observable<Artist> {
-    return this.httpClient.get<Artist>(this.url + '/api/artists/' + id)
+  getArtist(id: number): Observable<ArtistWithAlbums> {
+    return this.httpClient.get<ArtistWithAlbums>(this.url + '/api/artists/' + id)
     .pipe(
       retry(1),
       catchError(this.errorHandler)

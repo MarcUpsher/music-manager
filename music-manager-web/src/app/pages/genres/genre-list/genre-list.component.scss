@@ -1,1 +1,13 @@
 @import '~@angular/material/theming';
+
+.mat-table {
+  .mat-column-actions {
+    text-align: right;
+  }
+
+  /*
+  .th.mat-header-cell:last-of-type {
+
+  }
+  */
+}

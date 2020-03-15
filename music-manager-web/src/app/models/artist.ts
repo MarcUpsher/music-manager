@@ -1,5 +1,15 @@
-export class Artist {
+import { Album } from './album';
+
+export class BaseArtist {
   id: number;
   name: string;
-  dateAdded: Date;
+  imageUri: string;
+}
+
+export class Artist extends BaseArtist {
+  numberOfAlbums: number;
+}
+
+export class ArtistWithAlbums extends BaseArtist {
+  albums: Album[];
 }

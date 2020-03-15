@@ -4,7 +4,10 @@ export class Genre {
   associatedAlbums: number;
 }
 
-export class GenreDTO {
-  id: string;
+export class GenrePostDTO {
   name: string;
+
+  constructor(name = '') {
+    this.name = name;
+  }
 }

@@ -1,3 +1,12 @@
 <app-loader *ngIf="loading"></app-loader>
 <div *ngIf="!loading">
+  <app-page-header [title]="title"></app-page-header>
+
+  <mat-grid-list cols="8" rowHeight="320px">
+    <mat-grid-tile *ngFor="let artist of artists" [colspan]="1" [rowspan]="1">
+      <div class="internal-grid">
+        <app-artist-card [artist]="artist"></app-artist-card>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
 </div>

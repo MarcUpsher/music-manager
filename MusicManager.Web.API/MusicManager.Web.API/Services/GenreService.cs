@@ -42,6 +42,11 @@ namespace MusicManager.Web.API.Services
 			return new GenreResponse(existingGenre);
 		}
 
+		public async Task<Genre> GetByNameAsync(string name)
+		{
+			return await _genreRepository.FindByNameAsync(name);
+		}
+
 		public async Task<GenreResponse> SaveAsync(Genre genre)
 		{
 			try

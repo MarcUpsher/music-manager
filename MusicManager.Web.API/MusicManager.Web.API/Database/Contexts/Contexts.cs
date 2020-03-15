@@ -6,18 +6,18 @@ using MusicManager.Web.API.Domain.Models;
 
 namespace MusicManager.Web.API.Database.Contexts
 {
-  public class MusicManagerContext : DbContext
-  {
-    public DbSet<Artist> Artists { get; set; }
-    public DbSet<Album> Albums { get; set; }
-    public DbSet<Genre> Genres { get; set; }
-    public DbSet<Track> Tracks { get; set; }
-    public DbSet<AlbumGenre> AlbumGenres { get; set; }
+	public class MusicManagerContext : DbContext
+	{
+		public DbSet<Artist> Artists { get; set; }
+		public DbSet<Album> Albums { get; set; }
+		public DbSet<Genre> Genres { get; set; }
+		public DbSet<Track> Tracks { get; set; }
+		public DbSet<AlbumGenre> AlbumGenres { get; set; }
 
-    public MusicManagerContext(DbContextOptions<MusicManagerContext> options) : base(options)
-    {
+		public MusicManagerContext(DbContextOptions<MusicManagerContext> options) : base(options)
+		{
 
-    }
+		}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
@@ -53,9 +53,28 @@ namespace MusicManager.Web.API.Database.Contexts
 			);
 
 			modelBuilder.Entity<Artist>().HasData(
-				new Artist { ArtistId = 1, ImageRefId = 5, Name = "The Night Flight Orchestra" },
-				new Artist { ArtistId = 2, ImageRefId = 6, Name = "Pain Of Salvation" },
-				new Artist { ArtistId = 3, ImageRefId = 3, Name = "Bruce Springsteen" });
+				new Artist
+				{
+					ArtistId = 1,
+					ImageRefId = 5,
+					Name = "The Night Flight Orchestra",
+					Summary = "Bruce Springsteen, born September 23, 1949, is an American singer, songwriter, and musician who is both a solo artist and the leader of the E Street Band. He received critical acclaim for his early 1970s albums and attained worldwide fame upon the release of Born to Run in 1975. During a career that has spanned five decades, Springsteen has become known for his poetic and socially conscious lyrics and lengthy, energetic stage performances, earning the nickname \"The Boss\". He has recorded both rock albums and folk-oriented works, and his lyrics often address the experiences and struggles of working-class Americans."
+				},
+				new Artist
+				{
+					ArtistId = 2,
+					ImageRefId = 6,
+					Name = "Pain Of Salvation",
+					Summary = "Pain of Salvation is a Swedish progressive metal band led by Daniel Gildenlöw, who is the band's main songwriter, lyricist, guitarist, and vocalist. Pain of Salvation's sound is characterised by riff-oriented guitar work, a broad vocal range, oscillation between heavy and calm passages, complex vocal harmonies and the structures of their albums, syncopation, and polyrhythms. Thus far, every album released by the band has been a concept album. Lyrically, the band tends to address contemporary issues, such as sexuality, war, the environment, and the nature of God, humanity, and existence."
+				},
+				new Artist
+				{
+					ArtistId = 3,
+					ImageRefId = 3,
+					Name = "Bruce Springsteen",
+					Summary = "The Night Flight Orchestra is a Swedish hard rock band from Helsingborg. They are signed to Nuclear Blast Records. Formed in 2007 by Björn Strid and David Andersson while they were touring in the US with their band Soilwork, they were later joined by bassist Sharlee D'Angelo (Arch Enemy, Spiritual Beggars, ex-King Diamond), Richard Larsson (Von Benzo), Jonas Källsbäck (Mean Streak) and, more recently, Sebastian Forslund (Kadwatha). They have released six studio albums."
+				}
+				);
 
 			modelBuilder.Entity<Album>().HasData(
 				new Album
@@ -93,7 +112,8 @@ namespace MusicManager.Web.API.Database.Contexts
 					Name = "Born To Run",
 					ReleaseDate = DateTime.Parse("1975-08-25"),
 					Summary = "Born to Run is the third studio album by American singer-songwriter Bruce Springsteen."
-				});
+				}
+			);
 
 			modelBuilder.Entity<AlbumGenre>().HasData(
 				new AlbumGenre { AlbumGenreId = 1, AlbumId = 1, GenreId = 1 },

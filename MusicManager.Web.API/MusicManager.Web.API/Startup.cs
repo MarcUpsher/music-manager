@@ -39,6 +39,8 @@ namespace MusicManager.Web.API
 
 			services.AddScoped<IGenreService, GenreService>();
 			services.AddScoped<IGenreRepository, GenreRepository>();
+			services.AddScoped<IArtistService, ArtistService>();
+			services.AddScoped<IArtistRepository, ArtistRepository>();
 			services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 			services.AddCors(options =>

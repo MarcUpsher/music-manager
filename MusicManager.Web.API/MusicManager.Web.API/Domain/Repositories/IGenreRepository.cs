@@ -12,6 +12,7 @@ namespace MusicManager.Web.API.Domain.Repositories
 		Task<IEnumerable<Genre>> ListActiveAsync();
 		Task AddAsync(Genre genre);
 		Task<Genre> FindByIdAsync(int id);
+		Task<Genre> FindByNameAsync(string name);
 		void Update(Genre genre);
 		void Remove(Genre genre);
 	}

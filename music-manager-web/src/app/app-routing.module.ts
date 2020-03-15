@@ -14,14 +14,12 @@ import { TrackViewComponent } from './pages/tracks/track-view/track-view.compone
 import { TrackEditComponent } from './pages/tracks/track-edit/track-edit.component';
 
 import { GenreListComponent } from './pages/genres/genre-list/genre-list.component';
-import { GenreViewComponent } from './pages/genres/genre-view/genre-view.component';
 import { GenreEditComponent } from './pages/genres/genre-edit/genre-edit.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/albums', pathMatch: 'full' },
 
   { path: 'genre/list', component: GenreListComponent },
-  { path: 'genre/maintain', component: GenreEditComponent },
 
   { path: 'artist/list', component: ArtistListComponent },
   { path: 'artist/:id', component: ArtistViewComponent},

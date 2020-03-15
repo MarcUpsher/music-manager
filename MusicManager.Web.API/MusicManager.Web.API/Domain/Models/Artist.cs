@@ -9,6 +9,7 @@ namespace MusicManager.Web.API.Domain.Models
 		public int ArtistId {get;set;}
 		public int? ImageRefId { get; set; }
 		public string Name { get; set; }
+		public string Summary { get; set; }
 		public DateTime DateAdded { get; set; }
 		public DateTime? DateModified { get; set; }
 		public DateTime? DateDeleted { get; set; }

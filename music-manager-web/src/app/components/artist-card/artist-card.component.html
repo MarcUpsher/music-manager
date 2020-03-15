@@ -1,0 +1,12 @@
+<mat-card class="artist-card">
+  <mat-card-header>
+    <mat-card-title>{{artist.name}}</mat-card-title>    
+  </mat-card-header>
+  <img mat-card-lg-image src="{{artist.imageUri}}" alt="{{artist.name}}">
+  <mat-card-content>
+    <p>Number of albums: {{artist.numberOfAlbums}}</p>
+  </mat-card-content>
+  <mat-card-actions>
+    <a mat-button color="primary" [routerLink]="['/artist', artist.id]">View info</a>    
+  </mat-card-actions>
+</mat-card>

@@ -5,6 +5,7 @@ import { MatMenuTrigger } from '@angular/material/menu';
 import { GenreEditComponent } from '../genre-edit/genre-edit.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../../components/confirm-dialog/confirm-dialog.component';
+import { MatTable } from '@angular/material/table';
 
 @Component({
   selector: 'app-genre-list',
@@ -17,6 +18,7 @@ export class GenreListComponent implements OnInit {
   title = 'Genres';
   displayedColumns: string[] = ['name', 'associatedAlbums', 'actions'];
   dataSource: Genre[] = [];
+  @ViewChild(MatTable) table: MatTable<any>;
   @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
 
   constructor(
@@ -38,36 +40,37 @@ export class GenreListComponent implements OnInit {
     });
   }
 
-  onEditMenuClick(item: any) {
+  refreshTable() {
+    this.getGenres();
+    this.table.renderRows();
+  }
+
+  showEditDialog(item: any = null) {
     const dialog = this.dialog.open(GenreEditComponent, {
       width: '400px',
-      data: item.id
+      data: item != null ? item.id : null
     });
 
     dialog.afterClosed().subscribe(result => {
       if (result) {
-        this.genreService.getGenres();
+        this.refreshTable();
       }
     });
   }
 
-  onDeleteMenuClick(item: any) {
+  showDeleteDialog(item: any) {
     const dialog = this.dialog.open(ConfirmDialogComponent, {
       width: '250px'
     });
 
     dialog.afterClosed().subscribe(result => {
       if (result) {
-        this.genreService.getGenres();
+        this.genreService.deleteGenre(item.id).subscribe((data: Genre) => {
+          if (data.id === item.id) {
+            this.refreshTable();
+          }
+        });
       }
     });
-  }
-
-  showAddDialog() {
-
-  }
-
-  showMaintainDialog() {
-
   }
 }

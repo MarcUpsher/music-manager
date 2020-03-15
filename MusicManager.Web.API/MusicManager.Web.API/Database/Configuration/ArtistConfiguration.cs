@@ -24,6 +24,9 @@ namespace MusicManager.DAL.Configuration
 				.Property(s => s.Name)
 				.HasMaxLength(300);
 
+			modelBuilder.Property(s => s.Summary)
+				.HasMaxLength(2000);
+
 			modelBuilder
 				.Property(s => s.DateAdded)
 				.HasDefaultValue(DateTime.Now);
