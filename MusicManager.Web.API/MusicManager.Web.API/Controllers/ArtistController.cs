@@ -15,11 +15,13 @@ namespace MusicManager.Web.API.Controllers
 	public class ArtistController : ControllerBase
 	{
 		private readonly IArtistService _artistService;
+		private readonly IAlbumService _albumService;
 		private readonly IMapper _mapper;
 
-		public ArtistController(IArtistService artistService, IMapper mapper)
+		public ArtistController(IArtistService artistService, IAlbumService albumService, IMapper mapper)
 		{
 			_artistService = artistService;
+			_albumService = albumService;
 			_mapper = mapper;
 		}
 
@@ -30,10 +32,11 @@ namespace MusicManager.Web.API.Controllers
 			var artistsDto = _mapper.Map<IEnumerable<Artist>, IEnumerable<ArtistDTO>>(artists);
 
 			// Hack
-			foreach (var artistDto in artistsDto)
+			foreach (var artistDTO in artistsDto)
 			{
-				artistDto.ImageUri = Request.Scheme + "://" + Request.Host.Value + '/' + artistDto.ImageUri;
+				artistDTO.ImageUri = Helpers.GetImageUri(Request, artistDTO.ImageUri);
 			}
+
 			return artistsDto;
 		}
 
@@ -43,14 +46,25 @@ namespace MusicManager.Web.API.Controllers
 			if (!ModelState.IsValid)
 				return BadRequest(ModelState.GetErrorMessages());
 
-			var result = await _artistService.GetByIdAsync(id);
+			var result = await _artistService.GetByIdAsync(id);			
 
 			if (!result.Success)
 			{
 				return BadRequest(result.Message);
 			}
 
-			var artistDTO = _mapper.Map<Artist, ArtistWithAlbumsDTO>(result.Artist);
+			var artistDTO = _mapper.Map<Artist, ArtistDTO>(result.Artist);
+			artistDTO.ImageUri = Helpers.GetImageUri(Request, artistDTO.ImageUri);
+
+			var albums = await _albumService.GetByArtistAsync(result.Artist.ArtistId);
+			var albumsDTO = _mapper.Map<IEnumerable<Album>, List<AlbumDTO>>(albums);
+
+			foreach (var albumDTO in albumsDTO)
+			{
+				albumDTO.ImageUri = Helpers.GetImageUri(Request, albumDTO.ImageUri);
+			}
+			
+			artistDTO.Albums = albumsDTO;			
 
 			return Ok(artistDTO);
 		}

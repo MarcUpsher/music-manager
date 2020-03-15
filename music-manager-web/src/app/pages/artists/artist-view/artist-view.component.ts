@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ArtistService } from '../artist.service';
 import { ArtistWithAlbums } from 'src/app/models/artist';
 import { ActivatedRoute } from '@angular/router';
+import { Album } from 'src/app/models/album';
 
 @Component({
   selector: 'app-artist-view',
@@ -9,10 +10,12 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./artist-view.component.scss'],
   providers: []
 })
-export class ArtistViewComponent implements OnInit {
+export class ArtistViewComponent implements OnInit {  
   loading = true;
   title = '';
+  showAlbum = false;
   artistId: number;
+  album: Album;
   artist: ArtistWithAlbums;
 
   constructor(
@@ -27,7 +30,7 @@ export class ArtistViewComponent implements OnInit {
   }
 
   getArtist(id: number) {
-    this.loading = false;
+    this.loading = true;
     this.artistService.getArtist(id).subscribe((data: ArtistWithAlbums) => {
       this.title = data.name;
 
@@ -35,6 +38,15 @@ export class ArtistViewComponent implements OnInit {
 
       this.loading = false;
     });
+  }
+
+  onAlbumClick(album: Album) {
+    this.album = album;
+    this.showAlbum = true;
+  }
+
+  onCloseView() {
+    this.showAlbum = false;
   }
 }
 

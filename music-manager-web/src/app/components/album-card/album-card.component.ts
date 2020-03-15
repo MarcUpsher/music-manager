@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Album } from '../../models/album';
 
 @Component({
@@ -9,11 +9,16 @@ import { Album } from '../../models/album';
 })
 export class AlbumCardComponent implements OnInit {
   @Input() album: Album;
+  @Output() albumOutput = new EventEmitter<Album>();
 
   constructor(
   ) {
   }
 
   ngOnInit() {
+  }
+
+  onClick() {
+    this.albumOutput.emit(this.album);
   }
 }

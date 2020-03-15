@@ -23,10 +23,11 @@ namespace MusicManager.Web.API.Database.Repositories
 
 		public async Task<IEnumerable<Artist>> ListActiveAsync()
 		{
-			return await _context.Artists
-									.Where(w => w.DateDeleted == null)
+			return await _context.Artists									
 									.Include(w => w.ImageRef)
 									.Include(w => w.Albums)
+									.Where(w => w.DateDeleted == null)
+									.Where(t => t.Albums.Any(x => x.DateDeleted == null))
 									.ToListAsync();
 		}
 
@@ -38,9 +39,10 @@ namespace MusicManager.Web.API.Database.Repositories
 		public async Task<Artist> FindByIdAsync(int id)
 		{
 			return await _context.Artists
-									.Where(w => w.ArtistId == id)
 									.Include(w => w.ImageRef)
 									.Include(w => w.Albums)
+									.Where(w => w.ArtistId == id)
+									.Where(t => t.Albums.Any(x => x.DateDeleted == null))
 									.FirstOrDefaultAsync();
 		}
 

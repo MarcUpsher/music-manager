@@ -1,56 +1,75 @@
 <app-loader *ngIf="loading"></app-loader>
 <div *ngIf="!loading">
-  <div>
-    <button mat-stroked-button color="primary" [routerLink]="['/album/',this.albumId,'edit']">Edit</button>
-  </div>
-  <mat-grid-list cols="2" rowHeight="1:1">
-    <mat-grid-tile>
-      <div class="internal-grid">
-        <mat-grid-list cols="2" rowHeight="1:1">
-          <mat-grid-tile>
-            <mat-card>
-              <div class="image">
-                <img mat-card-image src="{{album.imageUri}}" alt="{{album.name}}">
-              </div>
-            </mat-card>
-          </mat-grid-tile>
-          <mat-grid-tile>
-            <mat-card>
-              <div class="title">
-                <h1 class="mat-h1">{{album.name}}</h1>
-              </div>
-              <div class="subtitle">
-                <h2 class="mat-h2">{{album.artistName}}</h2>
-              </div>
-              <div class="genres"></div>
-              <div class="release-date">Release date: {{album.releaseDate | date: 'mediumDate'}}</div>
-              <div class="summary">{{album.summary}}</div>
-            </mat-card>
-          </mat-grid-tile>
-        </mat-grid-list>
+
+  <mat-card class="page-actions">
+    <mat-card-actions>
+      <button mat-stroked-button color="primary" class="btn-back" (click)="onCloseView()">Back</button>
+      <div class="edit-btns-container">
+        <button mat-stroked-button color="primary" class="btn-edit-album" (click)="onEditAlbumClick()">Edit
+          album</button>
       </div>
-    </mat-grid-tile>
-    <mat-grid-tile>
-      <table mat-table [dataSource]="album.tracks" class="mat-elevation-z8">
+    </mat-card-actions>
+  </mat-card>
 
-        <ng-container matColumnDef="position">
-          <th mat-header-cell *matHeaderCellDef> No </th>
-          <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-        </ng-container>
+  <ng-container *ngIf="!showEdit">
+    <mat-grid-list cols="2" rowHeight="1:1">
+      <mat-grid-tile class="artist-tile">
+        <div class="internal-grid">
+          <mat-grid-list cols="2" rowHeight="1:1">
+            <mat-grid-tile>
+              <div class="internal-grid">
+                <mat-card>
+                  <div class="image">
+                    <img mat-card-image src="{{album.imageUri}}" alt="{{album.name}}">
+                  </div>
+                </mat-card>
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <div class="internal-grid">
+                <mat-card>
+                  <mat-card-content>
+                    <div class="title">
+                      <h1 class="mat-h1">{{album.name}}</h1>
+                    </div>
+                    <div class="genres"></div>
+                    <div class="release-date">Release date: {{album.releaseDate | date: 'mediumDate'}}</div>
+                    <div class="summary">{{album.summary}}</div>
+                  </mat-card-content>
+                </mat-card>
+              </div>
+            </mat-grid-tile>
+          </mat-grid-list>
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile class="album-tile">
+        <div class="internal-grid">
+          <table mat-table [dataSource]="album.tracks" class="mat-elevation-z8">
 
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef> Name </th>
-          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-        </ng-container>
+            <ng-container matColumnDef="position">
+              <th mat-header-cell *matHeaderCellDef> No </th>
+              <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+            </ng-container>
 
-        <ng-container matColumnDef="duration">
-          <th mat-header-cell *matHeaderCellDef> Duration </th>
-          <td mat-cell *matCellDef="let element"> {{element.duration | duration}} </td>
-        </ng-container>
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef> Name </th>
+              <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
-    </mat-grid-tile>
-  </mat-grid-list>
+            <ng-container matColumnDef="duration">
+              <th mat-header-cell *matHeaderCellDef> Duration </th>
+              <td mat-cell *matCellDef="let element"> {{element.duration | duration}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </ng-container>
+  <ng-container *ngIf="showEdit">
+    <app-album-edit [albumId]="album.id"></app-album-edit>
+  </ng-container>
+
 </div>

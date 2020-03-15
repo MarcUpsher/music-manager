@@ -3,6 +3,7 @@ import { Album } from './album';
 export class BaseArtist {
   id: number;
   name: string;
+  summary: string;
   imageUri: string;
 }
 

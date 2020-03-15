@@ -7,9 +7,9 @@ namespace MusicManager.Web.API.Controllers
 	[Route("api")]
 	[ApiController]
 	public class BaseController : ControllerBase
-	{
+	{		
 		public BaseController(IWebHostEnvironment env)
-		{
+		{			
 		}
 
 		[HttpGet]

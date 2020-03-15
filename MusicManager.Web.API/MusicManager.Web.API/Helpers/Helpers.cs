@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -40,9 +41,9 @@ namespace MusicManager.Web.API
                        .ToList();
     }
 
-    public static string GetImageUri(string uri)
+    public static string GetImageUri(HttpRequest request, string uri)
     {
-      return "http://localhost:5000/" + uri;
+      return !string.IsNullOrEmpty(uri) ? request.Scheme + "://" + request.Host.Value + '/' + uri : "";
     }
   }  
 }

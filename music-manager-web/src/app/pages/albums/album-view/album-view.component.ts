@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { AlbumService } from '../album.service';
@@ -12,8 +12,10 @@ import { FormGroup, FormControl } from '@angular/forms';
   providers: []
 })
 export class AlbumViewComponent implements OnInit {
+  @Input() album: Album;
+  @Output() closeView = new EventEmitter<true>();
   loading = true;
-  album: Album;
+  showEdit = false;
   albumId: number;
   albumForm: FormGroup;
 
@@ -25,7 +27,7 @@ export class AlbumViewComponent implements OnInit {
     public activatedRoute: ActivatedRoute,
     public dialog: MatDialog
   ) {
-    this.albumId = this.activatedRoute.snapshot.params.id;
+    //this.albumId = this.activatedRoute.snapshot.params.id;
   }
 
   ngOnInit() {
@@ -37,7 +39,7 @@ export class AlbumViewComponent implements OnInit {
       genres: new FormControl(''),
     });
 
-    this.getAlbum(this.albumId);
+    this.loading = false;
   }
 
   getAlbum(id: number) {
@@ -45,5 +47,13 @@ export class AlbumViewComponent implements OnInit {
       this.album = data;
       this.loading = false;
     });
+  }
+
+  onEditAlbumClick() {
+    this.showEdit = true;
+  }
+
+  onCloseView() {
+    this.closeView.emit(true);
   }
 }

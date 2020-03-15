@@ -58,7 +58,7 @@ namespace MusicManager.Web.API.Database.Contexts
 					ArtistId = 1,
 					ImageRefId = 5,
 					Name = "The Night Flight Orchestra",
-					Summary = "Bruce Springsteen, born September 23, 1949, is an American singer, songwriter, and musician who is both a solo artist and the leader of the E Street Band. He received critical acclaim for his early 1970s albums and attained worldwide fame upon the release of Born to Run in 1975. During a career that has spanned five decades, Springsteen has become known for his poetic and socially conscious lyrics and lengthy, energetic stage performances, earning the nickname \"The Boss\". He has recorded both rock albums and folk-oriented works, and his lyrics often address the experiences and struggles of working-class Americans."
+					Summary = "The Night Flight Orchestra is a Swedish hard rock band from Helsingborg. They are signed to Nuclear Blast Records. Formed in 2007 by Björn Strid and David Andersson while they were touring in the US with their band Soilwork, they were later joined by bassist Sharlee D'Angelo (Arch Enemy, Spiritual Beggars, ex-King Diamond), Richard Larsson (Von Benzo), Jonas Källsbäck (Mean Streak) and, more recently, Sebastian Forslund (Kadwatha). They have released six studio albums."
 				},
 				new Artist
 				{
@@ -72,7 +72,7 @@ namespace MusicManager.Web.API.Database.Contexts
 					ArtistId = 3,
 					ImageRefId = 3,
 					Name = "Bruce Springsteen",
-					Summary = "The Night Flight Orchestra is a Swedish hard rock band from Helsingborg. They are signed to Nuclear Blast Records. Formed in 2007 by Björn Strid and David Andersson while they were touring in the US with their band Soilwork, they were later joined by bassist Sharlee D'Angelo (Arch Enemy, Spiritual Beggars, ex-King Diamond), Richard Larsson (Von Benzo), Jonas Källsbäck (Mean Streak) and, more recently, Sebastian Forslund (Kadwatha). They have released six studio albums."
+					Summary = "Bruce Springsteen, born September 23, 1949, is an American singer, songwriter, and musician who is both a solo artist and the leader of the E Street Band. He received critical acclaim for his early 1970s albums and attained worldwide fame upon the release of Born to Run in 1975. During a career that has spanned five decades, Springsteen has become known for his poetic and socially conscious lyrics and lengthy, energetic stage performances, earning the nickname \"The Boss\". He has recorded both rock albums and folk-oriented works, and his lyrics often address the experiences and struggles of working-class Americans."
 				}
 				);
 

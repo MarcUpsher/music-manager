@@ -1,13 +1,12 @@
 <mat-card class="album-card">
   <mat-card-header>
-    <mat-card-title><a [routerLink]="['/album/', album.id]" class="">{{album.name}}</a></mat-card-title>
-    <mat-card-subtitle><a [routerLink]="['/artist/', album.artistId]" class="">{{album.artistName}}</a></mat-card-subtitle>
+    <mat-card-title>{{album.name}}</mat-card-title>    
   </mat-card-header>
-  <img mat-card-image src="{{album.imageUri}}" alt="{{album.name}}">
+  <img mat-card-lg-image src="{{album.imageUri}}" alt="{{album.name}}">
   <mat-card-content>
     <p>Number of tracks: {{album.numberOfTracks}}</p>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-button>View info</button>
+    <button mat-button (click)="onClick()">View info</button>
   </mat-card-actions>
 </mat-card>

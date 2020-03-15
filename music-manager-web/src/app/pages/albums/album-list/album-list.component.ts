@@ -1,8 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { AlbumService } from '../album.service';
 import { Album } from '../../../models/album';
-import { LoaderComponent } from '../../../components/loader/loader.component';
-import { AlbumCardComponent } from '../../../components/album-card/album-card.component';
 
 @Component({
   selector: 'app-album-list',
@@ -11,8 +9,8 @@ import { AlbumCardComponent } from '../../../components/album-card/album-card.co
   providers: []
 })
 export class AlbumListComponent implements OnInit {
+  @Input() albums: Album[];
   loading = true;
-  albums: Album[] = [];
 
   constructor(
     public albumService: AlbumService
@@ -20,10 +18,11 @@ export class AlbumListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getAlbums();
+    this.loading = false;
+    //this.getAlbumsByArtist();
   }
 
-  getAlbums() {
+  getAlbumsByArtist() {
     return this.albumService.getAlbums().subscribe((data: Album[]) => {
       this.albums = data;
       this.loading = false;

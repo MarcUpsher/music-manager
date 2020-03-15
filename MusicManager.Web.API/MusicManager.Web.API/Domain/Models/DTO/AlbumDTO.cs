@@ -12,7 +12,8 @@ namespace MusicManager.Web.API.Domain.Models.DTO
 		public DateTime ReleaseDate { get; set; }
 		public string ImageUri { get; set; }
 		public int NumberOfTracks { get; set; }
-		public List<string> Genres { get; set; }				
+		public List<string> Genres { get; set; }
+		public List<TrackDTO> Tracks { get; set; }
 	}
 
 	public class AlbumPostDTO

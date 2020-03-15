@@ -45,6 +45,14 @@
   }
 }
 
+.page-actions {
+  justify-content: flex-start !important;
+  .mat-card-actions {
+    margin-left:1em;
+    display:flex;
+  }
+}
+
 .mat-table {
   width:50%;
 }

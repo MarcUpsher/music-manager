@@ -21,8 +21,8 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
   providers: []
 })
 export class AlbumEditComponent implements OnInit {
+  @Input() albumId: number;
   loading = true;
-  albumId: number;
   album: Album;
   albumForm: FormGroup;
   availableArtists: FilterItem[] = [];
@@ -39,7 +39,7 @@ export class AlbumEditComponent implements OnInit {
     private fb: FormBuilder,
     public dialog: MatDialog
   ) {
-    this.albumId = this.activatedRoute.snapshot.params.id;
+    //this.albumId = this.activatedRoute.snapshot.params.id;
   }
 
   ngOnInit() {
@@ -113,7 +113,6 @@ export class AlbumEditComponent implements OnInit {
       j++;
     }
 
-
     this.table.renderRows();
   }
 
@@ -127,7 +126,7 @@ export class AlbumEditComponent implements OnInit {
 
       this.albumForm.patchValue({
         name: data.name,
-        artist: { id: data.artistId, name: data.artistName },
+        //artist: { id: data.artistId, name: data.artistName },
         imageUri: data.imageUri,
         releaseDate: data.releaseDate,
         summary: data.summary,

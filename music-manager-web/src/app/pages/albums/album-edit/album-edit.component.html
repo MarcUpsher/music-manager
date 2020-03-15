@@ -16,42 +16,42 @@
               </mat-card>
             </mat-grid-tile>
             <mat-grid-tile>
-              <mat-card>
-                <mat-form-field class="">
-                  <mat-label>Album name</mat-label>
-                  <input matInput placeholder="Name" formControlName="name">
-                </mat-form-field>
 
-                <mat-form-field>
-                  <mat-label>Artist</mat-label>
-                  <input type="text" matInput formControlName="artist" [matAutocomplete]="auto">
-                  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-                    <mat-option *ngFor="let item of filteredArtists | async" [value]="item">{{item.name}}</mat-option>
-                  </mat-autocomplete>
-                </mat-form-field>
+              <mat-form-field class="">
+                <mat-label>Album name</mat-label>
+                <input matInput placeholder="Name" formControlName="name">
+              </mat-form-field>
 
-                <mat-form-field>
-                  <mat-label>Release Date</mat-label>
-                  <input matInput [matDatepicker]="picker" formControlName="releaseDate">
-                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                  <mat-datepicker #picker></mat-datepicker>
-                </mat-form-field>
+              <mat-form-field>
+                <mat-label>Artist</mat-label>
+                <input type="text" matInput formControlName="artist" [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                  <mat-option *ngFor="let item of filteredArtists | async" [value]="item">{{item.name}}</mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
 
-                <mat-form-field class="">
-                  <mat-label>Genres</mat-label>
-                  <input matInput placeholder="Genres" formControlName="genres">
-                </mat-form-field>
+              <mat-form-field>
+                <mat-label>Release Date</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="releaseDate">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
 
-                <mat-form-field class="">
-                  <mat-label>Summary</mat-label>
-                  <textarea matInput placeholder="Genres" formControlName="summary"></textarea>
-                </mat-form-field>
+              <mat-form-field class="">
+                <mat-label>Genres</mat-label>
+                <input matInput placeholder="Genres" formControlName="genres">
+              </mat-form-field>
 
-                <mat-card-actions>
-                  <button mat-raised-button color="primary" (click)="formSubmit()">Save</button>
-                </mat-card-actions>
+              <mat-form-field class="">
+                <mat-label>Summary</mat-label>
+                <textarea matInput placeholder="Genres" formControlName="summary"></textarea>
+              </mat-form-field>
 
-              </mat-card>
+              <mat-form-actions>
+                <button mat-raised-button color="primary" (click)="formSubmit()">Save</button>
+              </mat-form-actions>
+
+
             </mat-grid-tile>
           </mat-grid-list>
         </div>
@@ -98,7 +98,8 @@
                 <th mat-header-cell *matHeaderCellDef> Duration </th>
                 <td mat-cell *matCellDef="let element; let i = index;" [formGroupName]="i">
                   <mat-form-field>
-                    <input matInput type="number" formControlName="duration" placeholder="Duration" value="{{element.value.duration}} ">
+                    <input matInput type="number" formControlName="duration" placeholder="Duration"
+                      value="{{element.value.duration}} ">
                   </mat-form-field>
                 </td>
               </ng-container>
