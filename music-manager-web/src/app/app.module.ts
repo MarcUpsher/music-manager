@@ -32,6 +32,7 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
 import { ReactiveFormsModule } from '@angular/forms';
 import { DurationPipe } from './pipes/duration.pipe';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MaterialFileInputModule } from 'ngx-material-file-input';
 
 @NgModule({
   imports: [
@@ -40,7 +41,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     BrowserAnimationsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    MaterialModule
+    MaterialModule,
+    MaterialFileInputModule
   ],
   declarations: [
     NavMenuComponent,

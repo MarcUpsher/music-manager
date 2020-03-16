@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
-import { Artist, ArtistWithAlbums } from '../../models/artist';
+import { Artist, ArtistWithAlbums, ArtistPostDTO } from '../../models/artist';
 import { FilterItem } from 'src/app/models/filter-item';
 
 @Injectable({
@@ -12,6 +12,7 @@ import { FilterItem } from 'src/app/models/filter-item';
 export class ArtistService {
 
   url = '';
+  headers = new HttpHeaders().append('Content-Disposition', 'mulipart/form-data');
 
   constructor(private httpClient: HttpClient) {
     this.url = environment.url;
@@ -35,6 +36,38 @@ export class ArtistService {
 
   getArtistsForFilter(): Observable<FilterItem[]> {
     return this.httpClient.get<FilterItem[]>(this.url + '/api/artistsforfilter')
+    .pipe(
+      retry(1),
+      catchError(this.errorHandler)
+    );
+  }
+
+  addArtist(artistPostDTO: FormData): Observable<Artist> {
+    return this.httpClient.post<Artist>(this.url + '/api/artists', artistPostDTO, {headers: this.headers})
+    .pipe(
+      retry(1),
+      catchError(this.errorHandler)
+    );
+  }
+
+  updateArtist(id: number, artistPostDTO: FormData): Observable<Artist> {
+    return this.httpClient.put<Artist>(this.url + '/api/artists/' + id, artistPostDTO)
+    .pipe(
+      retry(1),
+      catchError(this.errorHandler)
+    );
+  }
+
+  doesArtistExist(name: string): Observable<boolean> {
+    return this.httpClient.get<boolean>(this.url + '/api/artists/doesgenreexist?name=' + encodeURI(name))
+    .pipe(
+      retry(1),
+      catchError(this.errorHandler)
+    );
+  }
+
+  deleteArtist(id: number): Observable<Artist> {
+    return this.httpClient.delete<Artist>(this.url + '/api/artists/' + id)
     .pipe(
       retry(1),
       catchError(this.errorHandler)

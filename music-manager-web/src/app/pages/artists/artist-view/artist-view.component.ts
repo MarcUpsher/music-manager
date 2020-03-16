@@ -3,6 +3,8 @@ import { ArtistService } from '../artist.service';
 import { ArtistWithAlbums } from 'src/app/models/artist';
 import { ActivatedRoute } from '@angular/router';
 import { Album } from 'src/app/models/album';
+import { MatDialog } from '@angular/material/dialog';
+import { ArtistEditComponent } from '../artist-edit/artist-edit.component';
 
 @Component({
   selector: 'app-artist-view',
@@ -10,7 +12,7 @@ import { Album } from 'src/app/models/album';
   styleUrls: ['./artist-view.component.scss'],
   providers: []
 })
-export class ArtistViewComponent implements OnInit {  
+export class ArtistViewComponent implements OnInit {
   loading = true;
   title = '';
   showAlbum = false;
@@ -21,6 +23,7 @@ export class ArtistViewComponent implements OnInit {
   constructor(
     public artistService: ArtistService,
     public activatedRoute: ActivatedRoute,
+    public dialog: MatDialog
   ) {
     this.artistId = this.activatedRoute.snapshot.params.id;
   }
@@ -43,6 +46,19 @@ export class ArtistViewComponent implements OnInit {
   onAlbumClick(album: Album) {
     this.album = album;
     this.showAlbum = true;
+  }
+
+  showEditDialog() {
+    const dialog = this.dialog.open(ArtistEditComponent, {
+      width: '500px',
+      data: this.artistId
+    });
+
+    dialog.afterClosed().subscribe(result => {
+      if (result) {
+        this.getArtist(this.artistId);
+      }
+    });
   }
 
   onCloseView() {

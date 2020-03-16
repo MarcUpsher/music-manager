@@ -5,6 +5,10 @@
   height:100%;
 }
 
+.mat-grid-tile {
+  margin-left:1em;
+}
+
 .mat-card-image {
   max-width:300px;
 }
@@ -50,6 +54,12 @@
   .mat-card-actions {
     margin-left:1em;
     display:flex;
+  }
+  .btn-edit-album {
+    margin-left:1em;
+  }
+  .btn-edit-album:first-child {
+    margin-left:0;
   }
 }
 

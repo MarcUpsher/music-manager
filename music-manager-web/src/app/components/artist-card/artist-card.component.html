@@ -2,8 +2,11 @@
   <mat-card-header>
     <mat-card-title>{{artist.name}}</mat-card-title>    
   </mat-card-header>
-  <img mat-card-lg-image src="{{artist.imageUri}}" alt="{{artist.name}}">
-  <mat-card-content>
+  <div class="image-container">
+    <img *ngIf="artist.imageUri" mat-card-lg-image src="{{artist.imageUri}}" alt="{{artist.name}}">
+    <div *ngIf="!artist.imageUri" class="no-image-found"><mat-icon>broken_image</mat-icon></div>    
+  </div>
+  <mat-card-content class="content">
     <p>Number of albums: {{artist.numberOfAlbums}}</p>
   </mat-card-content>
   <mat-card-actions>

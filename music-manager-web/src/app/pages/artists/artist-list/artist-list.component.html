@@ -2,11 +2,20 @@
 <div *ngIf="!loading">
   <app-page-header [title]="title"></app-page-header>
 
-  <mat-grid-list cols="8" rowHeight="320px">
-    <mat-grid-tile *ngFor="let artist of artists" [colspan]="1" [rowspan]="1">
-      <div class="internal-grid">
-        <app-artist-card [artist]="artist"></app-artist-card>
-      </div>
-    </mat-grid-tile>
-  </mat-grid-list>
+  <mat-card class="page-actions">
+    <mat-card-actions>
+      <button mat-raised-button color="primary" class="btn-add" (click)="showAddArtist()">Add new artist</button>
+    </mat-card-actions>
+  </mat-card>
+
+  <div class="app-content">
+    <mat-grid-list cols="8" rowHeight="320px">
+      <mat-grid-tile *ngFor="let artist of artists" [colspan]="1" [rowspan]="1">
+        <div class="internal-grid">
+          <app-artist-card [artist]="artist"></app-artist-card>
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+
 </div>

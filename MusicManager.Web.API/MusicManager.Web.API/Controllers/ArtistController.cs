@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -65,6 +66,84 @@ namespace MusicManager.Web.API.Controllers
 			}
 			
 			artistDTO.Albums = albumsDTO;			
+
+			return Ok(artistDTO);
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> PostAsync([FromForm] ArtistPostDTO artistPostDTO)
+		{
+			if (!ModelState.IsValid)
+				return BadRequest(ModelState.GetErrorMessages());
+
+			var pathToSave = Path.Combine(@"wwwroot\images", Path.GetRandomFileName());
+			var filePath = Path.Combine(Directory.GetCurrentDirectory(), pathToSave);
+
+			using (var fileStream = new FileStream(filePath, FileMode.Create))
+			{
+				await artistPostDTO.Image.CopyToAsync(fileStream);
+			}
+
+			
+
+			var artist = _mapper.Map<ArtistPostDTO, Artist>(artistPostDTO);
+
+			artist.DateAdded = DateTime.Now;
+
+			var result = await _artistService.SaveAsync(artist);
+
+			if (!result.Success)
+			{
+				return BadRequest(result.Message);
+			}
+
+			var artistDTO = _mapper.Map<Artist, ArtistDTO>(result.Artist);
+
+			return Ok(artistDTO);
+		}
+
+		[HttpPut("{id}")]
+		//[Route("/artists/{id:int}")]
+		//[HttpPut("content/upload-image")]
+		[HttpPut]
+		public async Task<IActionResult> PutAsync([FromForm] ArtistPostDTO artistPostDTO, int id)
+		{
+			if (!ModelState.IsValid)
+				return BadRequest(ModelState.GetErrorMessages());
+
+			var artist = _mapper.Map<ArtistPostDTO, Artist>(artistPostDTO);
+
+			var pathToSave = Path.Combine(@"wwwroot\images", Path.GetRandomFileName());
+			var filePath = Path.Combine(Directory.GetCurrentDirectory(), pathToSave);
+
+			using (var fileStream = new FileStream(filePath, FileMode.Create))
+			{
+				await artistPostDTO.Image.CopyToAsync(fileStream);
+			}
+
+			var result = await _artistService.UpdateAsync(id, artist);
+
+			if (!result.Success)
+			{
+				return BadRequest(result.Message);
+			}
+
+			var artistDTO = _mapper.Map<Artist, ArtistDTO>(result.Artist);
+
+			return Ok(artistDTO);
+		}
+
+		[HttpDelete("{id}")]
+		public async Task<IActionResult> DeleteAsync(int id)
+		{
+			var result = await _artistService.DeleteAsync(id);
+
+			if (!result.Success)
+			{
+				return BadRequest(result.Message);
+			}
+
+			var artistDTO = _mapper.Map<Artist, ArtistDTO>(result.Artist);
 
 			return Ok(artistDTO);
 		}

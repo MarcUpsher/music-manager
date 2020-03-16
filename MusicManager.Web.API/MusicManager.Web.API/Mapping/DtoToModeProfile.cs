@@ -13,6 +13,9 @@ namespace MusicManager.Web.API.Mapping
 		public DtoToModelProfile()
 		{
 			CreateMap<GenrePostDTO, Genre>();
+			CreateMap<AlbumPostDTO, Album>();
+			CreateMap<ArtistPostDTO, Artist>();
+			CreateMap<TrackDTO, Track>();
 		}
 	}
 }

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ArtistService } from '../artist.service';
 import { Artist } from 'src/app/models/artist';
+import { ArtistEditComponent } from '../artist-edit/artist-edit.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-artist-list',
@@ -14,7 +16,8 @@ export class ArtistListComponent implements OnInit {
   artists: Artist[] = [];
 
   constructor(
-    public artistService: ArtistService
+    public artistService: ArtistService,
+    public dialog: MatDialog
   ) {
   }
 
@@ -28,6 +31,19 @@ export class ArtistListComponent implements OnInit {
     this.artistService.getArtists().subscribe((data: Artist[]) => {
       this.artists = data;
       this.loading = false;
+    });
+  }
+
+  showAddArtist() {
+    const dialog = this.dialog.open(ArtistEditComponent, {
+      width: '500px',
+      data: null
+    });
+
+    dialog.afterClosed().subscribe(result => {
+      if (result) {
+        this.getArtists();
+      }
     });
   }
 }

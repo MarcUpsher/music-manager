@@ -23,11 +23,22 @@ namespace MusicManager.Web.API.Database.Repositories
 
 		public async Task<IEnumerable<Artist>> ListActiveAsync()
 		{
-			return await _context.Artists									
+			return await _context.Artists
 									.Include(w => w.ImageRef)
 									.Include(w => w.Albums)
 									.Where(w => w.DateDeleted == null)
-									.Where(t => t.Albums.Any(x => x.DateDeleted == null))
+									.Select(s => new Artist()
+									{
+										ArtistId = s.ArtistId,
+										ImageRefId = s.ImageRefId,
+										ImageRef = s.ImageRef,
+										Name = s.Name,
+										Summary = s.Summary,
+										DateAdded = s.DateAdded,
+										DateModified = s.DateModified,
+										DateDeleted = s.DateDeleted,
+										Albums = s.Albums.Where(w => w.DateDeleted == null).ToList()
+									})									
 									.ToListAsync();
 		}
 
@@ -41,9 +52,20 @@ namespace MusicManager.Web.API.Database.Repositories
 			return await _context.Artists
 									.Include(w => w.ImageRef)
 									.Include(w => w.Albums)
-									.Where(w => w.ArtistId == id)
-									.Where(t => t.Albums.Any(x => x.DateDeleted == null))
-									.FirstOrDefaultAsync();
+									.Where(w => w.ArtistId == id && w.DateDeleted == null)
+									.Select(s => new Artist()
+									{
+										ArtistId = s.ArtistId,
+										ImageRefId = s.ImageRefId,
+										ImageRef = s.ImageRef,
+										Name = s.Name,
+										Summary = s.Summary,
+										DateAdded = s.DateAdded,
+										DateModified = s.DateModified,
+										DateDeleted = s.DateDeleted,
+										Albums = s.Albums.Where(w => w.DateDeleted == null).ToList()
+									})
+									.SingleAsync();
 		}
 
 		public async Task<Artist> FindByNameAsync(string name)

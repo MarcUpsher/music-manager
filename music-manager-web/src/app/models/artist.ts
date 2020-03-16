@@ -14,3 +14,15 @@ export class Artist extends BaseArtist {
 export class ArtistWithAlbums extends BaseArtist {
   albums: Album[];
 }
+
+export class ArtistPostDTO {
+  name: string;
+  summary: string;
+  image: File;
+
+  constructor(name = '', summmary = '', image: any) {
+    this.name = name;
+    this.summary = summmary;
+    this.image = image;
+  }
+}

@@ -13,6 +13,7 @@ namespace MusicManager.Web.API.Database.Contexts
 		public DbSet<Genre> Genres { get; set; }
 		public DbSet<Track> Tracks { get; set; }
 		public DbSet<AlbumGenre> AlbumGenres { get; set; }
+		public DbSet<ImageRef> ImageRefs { get; set; }
 
 		public MusicManagerContext(DbContextOptions<MusicManagerContext> options) : base(options)
 		{

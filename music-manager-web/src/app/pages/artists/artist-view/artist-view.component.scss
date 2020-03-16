@@ -8,9 +8,12 @@
   }
 
   .artist-tile {
-    
-    .mat-card-image {
+    .image-container {
       width:300px;
+      height:300px;
+      .mat-card-image {
+        width:300px;
+      }      
     }
   }
 
@@ -26,4 +29,10 @@
 
 .page-actions {
   justify-content: flex-start !important;
+  .mat-button {
+    margin-left:1em;
+  }
+  .mat-button:first-child {
+    margin-left:0;
+  }
 }

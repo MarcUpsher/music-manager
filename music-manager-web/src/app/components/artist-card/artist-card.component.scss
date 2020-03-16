@@ -4,6 +4,22 @@
   /* width:320px; */
   @include mat-elevation(2);
 
+  .content {
+    margin-top:1em;
+  }
+
+  .image-container {
+    width:152px;
+    height:152px;
+    .no-image-found {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      border:1px solid #ddd;
+    }
+  }
+
   .mat-card-image {
     max-width:300px;
   }

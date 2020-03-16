@@ -15,7 +15,7 @@ import { debounceTime, map } from 'rxjs/operators';
 export class GenreEditComponent implements OnInit {
   loading = false;
   isEdit = false;
-  title: string;
+  title = 'Add new genre';
   validating = false;
   currentName = '';
   genreForm: FormGroup;
@@ -32,8 +32,6 @@ export class GenreEditComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.title = 'Add new genre';
-
     if (this.id != null) {
       this.loading = true;
       this.isEdit = true;

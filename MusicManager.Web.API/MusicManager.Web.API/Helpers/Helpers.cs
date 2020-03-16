@@ -41,9 +41,14 @@ namespace MusicManager.Web.API
                        .ToList();
     }
 
+    public static string GetServerUri(HttpRequest request)
+    {
+      return request.Scheme + "://" + request.Host.Value;
+    }
+
     public static string GetImageUri(HttpRequest request, string uri)
     {
-      return !string.IsNullOrEmpty(uri) ? request.Scheme + "://" + request.Host.Value + '/' + uri : "";
+      return !string.IsNullOrEmpty(uri) ? GetServerUri(request) + '/' + uri : "";
     }
   }  
 }

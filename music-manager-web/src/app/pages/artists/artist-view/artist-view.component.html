@@ -5,31 +5,43 @@
   <mat-card class="page-actions">
     <mat-card-actions>
       <button mat-stroked-button color="primary" [routerLink]="['/artist','list']">Back</button>
+      <button mat-stroked-button color="primary" (click)="showEditDialog()">Edit artist</button>
     </mat-card-actions>
   </mat-card>
 
-  <mat-grid-list cols="4" rowHeight="1:1">
-    <mat-grid-tile [colspan]="1" [rowspan]="1" class="artist-tile">
-      <div class="internal-grid">
-        <mat-card class="artist-card">
-          <img mat-card-image src="{{artist.imageUri}}" alt="{{artist.name}}">
-        </mat-card>
-        <mat-content>
-          <p>{{artist.summary}}</p>
-        </mat-content>
-      </div>
-    </mat-grid-tile>
-    <mat-grid-tile [colspan]="3" [rowspan]="1" class="album-tile">
-      <div class="internal-grid">
-        <mat-grid-list cols="5" rowHeight="400px" *ngIf="!showAlbum">
-          <mat-grid-tile *ngFor="let album of artist.albums" [colspan]="1" [rowspan]="1">
-            <div class="internal-grid">
-              <app-album-card [album]="album" (albumOutput)="onAlbumClick($event)"></app-album-card>
+  <div class="app-content">
+    <mat-grid-list cols="4" rowHeight="1:1">
+      <mat-grid-tile [colspan]="1" [rowspan]="1" class="artist-tile">
+        <div class="internal-grid">
+          <mat-card class="artist-card">
+            <div class="image-container">
+              <img *ngIf="artist.imageUri" mat-card-image src="{{artist.imageUri}}" alt="{{artist.name}}">
+              <div *ngIf="!artist.imageUri" class="no-image-found"><mat-icon>broken_image</mat-icon></div>    
             </div>
-          </mat-grid-tile>
-        </mat-grid-list>
-        <app-album-view *ngIf="showAlbum" [album]="album" (closeView)="onCloseView()"></app-album-view>
-      </div>
-    </mat-grid-tile>
-  </mat-grid-list>
+          </mat-card>
+          <mat-content>
+            <p>Summary</p>
+            <p>{{artist.summary || 'No summary yet!'}}</p>
+          </mat-content>
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="3" [rowspan]="1" class="album-tile">
+        <div class="internal-grid">
+          <div *ngIf="artist.albums.length > 0">
+            <mat-grid-list cols="5" rowHeight="400px" *ngIf="!showAlbum">
+              <mat-grid-tile *ngFor="let album of artist.albums" [colspan]="1" [rowspan]="1">
+                <div class="internal-grid">
+                  <app-album-card [album]="album" (albumOutput)="onAlbumClick($event)"></app-album-card>
+                </div>
+              </mat-grid-tile>
+            </mat-grid-list>
+            <app-album-view *ngIf="showAlbum" [album]="album" (closeView)="onCloseView()"></app-album-view>
+          </div>
+          <div *ngIf="artist.albums.length === 0">No albums loaded yet!</div>
+          
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+
 </div>

@@ -17,7 +17,7 @@ import { GenreListComponent } from './pages/genres/genre-list/genre-list.compone
 import { GenreEditComponent } from './pages/genres/genre-edit/genre-edit.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/albums', pathMatch: 'full' },
+  { path: '', redirectTo: '/artist/list', pathMatch: 'full' },
 
   { path: 'genre/list', component: GenreListComponent },
 
