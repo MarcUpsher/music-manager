@@ -1,11 +1,8 @@
 //@import '~@angular/material/theming';
 
-.internal-grid {
-  width:100%;
-  height:100%;
-}
-
-.mat-grid-tile {
-  padding-top:0 !important;
-  height:300px !important;
+.col {
+  margin:0 1em;
+  &:first-child {
+    margin-left:0;
+  }
 }

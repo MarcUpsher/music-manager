@@ -33,7 +33,7 @@ export class GenreService {
   }
 
   getGenresForFilter(): Observable<FilterItem[]> {
-    return this.httpClient.get<FilterItem[]>(this.url + '/api/genresforfilter')
+    return this.httpClient.get<FilterItem[]>(this.url + '/api/genres/getfilter')
     .pipe(
       retry(1),
       catchError(this.errorHandler)

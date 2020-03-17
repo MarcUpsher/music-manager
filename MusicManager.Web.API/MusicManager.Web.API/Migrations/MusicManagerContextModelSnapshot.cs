@@ -32,7 +32,7 @@ namespace MusicManager.Web.API.Migrations
                     b.Property<DateTime>("DateAdded")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 3, 15, 17, 23, 8, 46, DateTimeKind.Local).AddTicks(8595));
+                        .HasDefaultValue(new DateTime(2020, 3, 17, 8, 1, 48, 446, DateTimeKind.Local).AddTicks(3252));
 
                     b.Property<DateTime?>("DateDeleted")
                         .HasColumnType("datetime2");
@@ -119,7 +119,7 @@ namespace MusicManager.Web.API.Migrations
                     b.Property<DateTime>("DateAdded")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 3, 15, 17, 23, 8, 64, DateTimeKind.Local).AddTicks(8163));
+                        .HasDefaultValue(new DateTime(2020, 3, 17, 8, 1, 48, 464, DateTimeKind.Local).AddTicks(6794));
 
                     b.Property<DateTime?>("DateDeleted")
                         .HasColumnType("datetime2");
@@ -204,7 +204,7 @@ namespace MusicManager.Web.API.Migrations
                     b.Property<DateTime>("DateAdded")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 3, 15, 17, 23, 8, 37, DateTimeKind.Local).AddTicks(8743));
+                        .HasDefaultValue(new DateTime(2020, 3, 17, 8, 1, 48, 438, DateTimeKind.Local).AddTicks(8657));
 
                     b.Property<DateTime?>("DateDeleted")
                         .HasColumnType("datetime2");
@@ -266,7 +266,7 @@ namespace MusicManager.Web.API.Migrations
                     b.Property<DateTime>("DateAdded")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 3, 15, 17, 23, 8, 23, DateTimeKind.Local).AddTicks(6480));
+                        .HasDefaultValue(new DateTime(2020, 3, 17, 8, 1, 48, 424, DateTimeKind.Local).AddTicks(7139));
 
                     b.Property<DateTime?>("DateDeleted")
                         .HasColumnType("datetime2");
@@ -337,9 +337,12 @@ namespace MusicManager.Web.API.Migrations
                     b.Property<DateTime>("DateAdded")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 3, 15, 17, 23, 8, 2, DateTimeKind.Local).AddTicks(7019));
+                        .HasDefaultValue(new DateTime(2020, 3, 17, 8, 1, 48, 402, DateTimeKind.Local).AddTicks(3526));
 
                     b.Property<DateTime?>("DateDeleted")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateModified")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("URI")
@@ -407,7 +410,7 @@ namespace MusicManager.Web.API.Migrations
                     b.Property<DateTime>("DateAdded")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 3, 15, 17, 23, 8, 57, DateTimeKind.Local).AddTicks(1945));
+                        .HasDefaultValue(new DateTime(2020, 3, 17, 8, 1, 48, 456, DateTimeKind.Local).AddTicks(9830));
 
                     b.Property<DateTime?>("DateDeleted")
                         .HasColumnType("datetime2");

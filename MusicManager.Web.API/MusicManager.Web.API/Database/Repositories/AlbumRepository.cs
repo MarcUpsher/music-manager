@@ -51,6 +51,7 @@ namespace MusicManager.Web.API.Database.Repositories
 			return await _context.Albums
 									.Include(w => w.ImageRef)
 									.Include(w => w.Tracks)
+									.Include(w => w.Artist)
 									.Where(w => w.AlbumId == id)
 									.Where(t => t.Tracks.Any(x => x.DateDeleted == null))
 									.FirstOrDefaultAsync();

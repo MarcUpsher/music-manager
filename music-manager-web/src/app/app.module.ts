@@ -33,6 +33,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DurationPipe } from './pipes/duration.pipe';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   imports: [
@@ -42,7 +43,8 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
     HttpClientModule,
     ReactiveFormsModule,
     MaterialModule,
-    MaterialFileInputModule
+    MaterialFileInputModule,
+    FlexLayoutModule
   ],
   declarations: [
     NavMenuComponent,

@@ -9,3 +9,17 @@
   height: 100%;
   border:1px solid #ddd;
 }
+
+.page-actions,
+.section-actions {
+  box-shadow:none !important;
+  background: none !important;
+}
+
+.app-content {
+  margin:1em 1em 0 1em;
+}
+
+table {
+  width: 100%;
+}

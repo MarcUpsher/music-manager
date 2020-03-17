@@ -37,8 +37,16 @@ export class AlbumService {
     );
   }
 
-  updateAlbum(id: number, data: AlbumPost): Observable<any> {
-    return this.httpClient.put(this.url + '/api/albums/' + id, data, this.httpOptions)
+  addAlbum(albumPostDTO: FormData): Observable<Album> {
+    return this.httpClient.post<Album>(this.url + '/api/albums', albumPostDTO)
+    .pipe(
+      retry(1),
+      catchError(this.errorHandler)
+    );
+  }
+
+  updateAlbum(id: number, albumPostDTO: FormData): Observable<Album> {
+    return this.httpClient.put<Album>(this.url + '/api/albums/' + id, albumPostDTO)
     .pipe(
       retry(1),
       catchError(this.errorHandler)

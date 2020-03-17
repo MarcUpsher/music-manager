@@ -1,12 +1,14 @@
 <app-loader *ngIf="loading"></app-loader>
-<div *ngIf="!loading">
-
-  <mat-grid-list cols="6" height="1:3">
-    <div class="internal-grid">
-      <mat-grid-tile *ngFor="let album of albums" [colspan]="1" [rowspan]="1">
-        <app-album-card [album]="album"></app-album-card>    
-    </mat-grid-tile>
+<div *ngIf="!loading">  
+  <div class="app-content">
+    <div fxLayout="row">
+      <ng-container *ngIf="albums.length > 0">
+        <div *ngFor="let album of albums" class="col">
+          <app-album-card [album]="album" (albumCardOutput)="onAlbumCardClick($event)"></app-album-card>
+        </div>
+      </ng-container>
+      <div *ngIf="albums.length === 0" class="col">No albums loaded yet!</div>
+    </div>
   </div>
-  </mat-grid-list>
-
+  
 </div>

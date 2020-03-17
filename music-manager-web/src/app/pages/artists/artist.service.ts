@@ -35,7 +35,7 @@ export class ArtistService {
   }
 
   getArtistsForFilter(): Observable<FilterItem[]> {
-    return this.httpClient.get<FilterItem[]>(this.url + '/api/artistsforfilter')
+    return this.httpClient.get<FilterItem[]>(this.url + '/api/artists/getfilter')
     .pipe(
       retry(1),
       catchError(this.errorHandler)
@@ -43,7 +43,7 @@ export class ArtistService {
   }
 
   addArtist(artistPostDTO: FormData): Observable<Artist> {
-    return this.httpClient.post<Artist>(this.url + '/api/artists', artistPostDTO, {headers: this.headers})
+    return this.httpClient.post<Artist>(this.url + '/api/artists', artistPostDTO)
     .pipe(
       retry(1),
       catchError(this.errorHandler)

@@ -8,3 +8,19 @@
   display:flex;
   justify-content: flex-end;
 }
+
+.image-preview {
+  overflow: hidden;  
+  img {
+    max-width:300px;
+  }
+}
+
+.image-clear {
+  margin-bottom:1em;
+}
+
+.input-summary {
+  min-height: 50px;
+  height:100px;
+}

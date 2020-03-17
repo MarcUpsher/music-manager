@@ -33,6 +33,16 @@ namespace MusicManager.Web.API.Controllers
 			return genresDto;
 		}
 
+		[HttpGet("getfilter")]
+		public async Task<IActionResult> GetAsyncForFilter()
+		{
+			var genres = await _genreService.ListActiveAsync();
+
+			var artistsFilterDto = _mapper.Map<IEnumerable<Genre>, IEnumerable<FilterItemDTO>>(genres);
+
+			return Ok(artistsFilterDto);
+		}
+
 		[HttpGet("{id}")]
 		public async Task<IActionResult> GetAsyncById(int id)
 		{

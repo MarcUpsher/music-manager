@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { AlbumService } from '../album.service';
 import { Album } from '../../../models/album';
 
@@ -10,7 +10,9 @@ import { Album } from '../../../models/album';
 })
 export class AlbumListComponent implements OnInit {
   @Input() albums: Album[];
+  @Output() albumOutput = new EventEmitter<Album>();
   loading = true;
+  showAlbum = false;
 
   constructor(
     public albumService: AlbumService
@@ -19,7 +21,6 @@ export class AlbumListComponent implements OnInit {
 
   ngOnInit() {
     this.loading = false;
-    //this.getAlbumsByArtist();
   }
 
   getAlbumsByArtist() {
@@ -27,5 +28,13 @@ export class AlbumListComponent implements OnInit {
       this.albums = data;
       this.loading = false;
     });
+  }
+
+  onAlbumCardClick(album: any) {
+    this.albumOutput.emit(album);
+  }
+
+  onCloseView() {
+    this.showAlbum = false;
   }
 }

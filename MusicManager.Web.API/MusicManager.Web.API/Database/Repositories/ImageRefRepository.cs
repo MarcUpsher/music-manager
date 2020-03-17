@@ -16,6 +16,11 @@ namespace MusicManager.Web.API.Database.Repositories
 
 		}
 
+		public async Task<ImageRef> FindByIdAsync(int id)
+		{
+			return await _context.ImageRefs.FindAsync(id);
+		}
+
 		public async Task AddAsync(ImageRef imageRef)
 		{
 			await _context.ImageRefs.AddAsync(imageRef);

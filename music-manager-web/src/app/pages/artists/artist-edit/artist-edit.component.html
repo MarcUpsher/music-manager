@@ -14,19 +14,18 @@
         </mat-error>
       </mat-form-field>
 
-      <!--
-      <input type="file" #fileInput formControlName="image" (change)="stageFile()"
-           accept="jpg, jpeg, png">
-
-      <mat-form-field class="full-width">
-        
-          </mat-form-field>
-          -->
-
-      <mat-form-field class="full-width">
+      <!-- Image Preview -->
+      <div class="image-preview" *ngIf="imageURL && imageURL !== ''">
+        <img [src]="imageURL" [alt]="artistForm.value.name">        
+      </div>
+      <button class="image-clear" mat-stroked-button *ngIf="imageURL && imageURL !== ''" (click)="clearImage()">Clear image</button>
+      
+      <mat-form-field class="full-width" *ngIf="imageURL === ''">
         <ngx-mat-file-input #fileInput formControlName="image" placeholder="Required input" 
-          accept="image/*" valuePlaceholder="No file selected" (change)="onFileChange($event)"></ngx-mat-file-input>
-        <mat-icon matSuffix>insert_photo</mat-icon>
+          accept="image/*" valuePlaceholder="No file selected" (change)="onFileSelect($event)"></ngx-mat-file-input>
+          <button mat-icon-button matSuffix *ngIf="!fileInput.empty" (click)="fileInput.clear($event)">
+            <mat-icon>clear</mat-icon>
+          </button>
         <mat-error *ngIf="image.hasError('required')">
           Please select a file
         </mat-error>
@@ -37,7 +36,7 @@
       </mat-form-field>
 
       <mat-form-field class="full-width">
-        <textarea matInput placeholder="Summary" formControlName="summary"></textarea>
+        <textarea matInput class="input-summary" placeholder="Summary" formControlName="summary"></textarea>
       </mat-form-field>
 
     </mat-dialog-content>

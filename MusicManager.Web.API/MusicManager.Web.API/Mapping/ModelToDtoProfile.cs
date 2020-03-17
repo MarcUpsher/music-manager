@@ -25,6 +25,7 @@ namespace MusicManager.Web.API.Mapping
 
 			CreateMap<Album, AlbumDTO>()
 				.ForMember(d => d.Id, o => o.MapFrom(s => s.AlbumId))
+				.ForMember(d => d.ArtistName, o => o.MapFrom(s => s.Artist.Name))
 				.ForMember(d => d.ImageUri, o => o.MapFrom(s => s.ImageRef.URI))
 				.ForMember(d => d.NumberOfTracks, o => o.MapFrom(s => s.Tracks.Count()))
 				.ForMember(d => d.Genres, o => o.MapFrom(s => s.AlbumGenres.Select(s => s.Genre.Name)));
@@ -33,6 +34,12 @@ namespace MusicManager.Web.API.Mapping
 				.ForMember(d => d.Id, o => o.MapFrom(s => s.ArtistId))
 				.ForMember(d => d.ImageUri, o => o.MapFrom(s => s.ImageRef.URI))
 				.ForMember(d => d.NumberOfAlbums, o => o.MapFrom(s => s.Albums.Count()));
+
+			CreateMap<Artist, FilterItemDTO>()
+				.ForMember(d => d.Id, o => o.MapFrom(s => s.ArtistId));
+
+			CreateMap<Genre, FilterItemDTO>()
+				.ForMember(d => d.Id, o => o.MapFrom(s => s.GenreId));
 		}
 	}
 }

@@ -41,6 +41,16 @@ namespace MusicManager.Web.API.Controllers
 			return artistsDto;
 		}
 
+		[HttpGet("getfilter")]
+		public async Task<IActionResult> GetAsyncForFilter()
+		{
+			var artists = await _artistService.ListActiveAsync();
+
+			var artistsFilterDto = _mapper.Map<IEnumerable<Artist>, IEnumerable<FilterItemDTO>>(artists);
+
+			return Ok(artistsFilterDto);
+		}
+
 		[HttpGet("{id}")]
 		public async Task<IActionResult> GetAsyncById(int id)
 		{
@@ -76,19 +86,23 @@ namespace MusicManager.Web.API.Controllers
 			if (!ModelState.IsValid)
 				return BadRequest(ModelState.GetErrorMessages());
 
-			var pathToSave = Path.Combine(@"wwwroot\images", Path.GetRandomFileName());
-			var filePath = Path.Combine(Directory.GetCurrentDirectory(), pathToSave);
+			var image = artistPostDTO.Image;
+
+			var fileName = $"{Path.GetRandomFileName()}{Path.GetExtension(image.FileName)}";			
+			var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot/images", fileName);
 
 			using (var fileStream = new FileStream(filePath, FileMode.Create))
 			{
-				await artistPostDTO.Image.CopyToAsync(fileStream);
-			}
-
-			
+				await image.CopyToAsync(fileStream);
+			}			
 
 			var artist = _mapper.Map<ArtistPostDTO, Artist>(artistPostDTO);
 
-			artist.DateAdded = DateTime.Now;
+			artist.ImageRef = new ImageRef()
+			{
+				URI = $"images/{fileName}",
+				DateAdded = DateTime.Now
+			};
 
 			var result = await _artistService.SaveAsync(artist);
 
@@ -103,25 +117,25 @@ namespace MusicManager.Web.API.Controllers
 		}
 
 		[HttpPut("{id}")]
-		//[Route("/artists/{id:int}")]
-		//[HttpPut("content/upload-image")]
 		[HttpPut]
 		public async Task<IActionResult> PutAsync([FromForm] ArtistPostDTO artistPostDTO, int id)
 		{
 			if (!ModelState.IsValid)
-				return BadRequest(ModelState.GetErrorMessages());
+				return BadRequest(ModelState.GetErrorMessages());			
 
-			var artist = _mapper.Map<ArtistPostDTO, Artist>(artistPostDTO);
+			var image = artistPostDTO.Image;
 
-			var pathToSave = Path.Combine(@"wwwroot\images", Path.GetRandomFileName());
-			var filePath = Path.Combine(Directory.GetCurrentDirectory(), pathToSave);
+			var fileName = $"{Path.GetRandomFileName()}{Path.GetExtension(image.FileName)}";
+			var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot/images", fileName);
 
 			using (var fileStream = new FileStream(filePath, FileMode.Create))
 			{
-				await artistPostDTO.Image.CopyToAsync(fileStream);
+				await image.CopyToAsync(fileStream);
 			}
 
-			var result = await _artistService.UpdateAsync(id, artist);
+			var artist = _mapper.Map<ArtistPostDTO, Artist>(artistPostDTO);
+
+			var result = await _artistService.UpdateAsync(id, artist, $"images/{fileName}");
 
 			if (!result.Success)
 			{

@@ -18,8 +18,8 @@ export class ArtistEditComponent implements OnInit {
   artistForm: FormGroup;
   validating = false;
   currentName: string;
-  imageFile: any;
-  imageLoaded = false;
+  currentImageUriId: number;
+  imageURL = '';
   @ViewChild('fileInput', { static: false }) fileInput: any;
   readonly maxSize = 1048576;
 
@@ -49,11 +49,14 @@ export class ArtistEditComponent implements OnInit {
     this.artistService.getArtist(id).subscribe((data: ArtistWithAlbums) => {
       this.title = 'Edit artist \'' + data.name + '\'';
       this.currentName = data.name;
+      this.currentImageUriId = data.imageUriId;
+      if (data.imageUri !== '') {
+        this.imageURL = data.imageUri;
+      }
 
       this.artistForm.patchValue({
         name: data.name,
-        summary: data.summary,
-        image: data.imageUri
+        summary: data.summary
       });
 
       this.loading = false;
@@ -76,6 +79,21 @@ export class ArtistEditComponent implements OnInit {
     return this.artistForm.controls[control].hasError(error);
   }
 
+  clearImage() {
+    this.imageURL = '';
+    this.artistForm.get('image').updateValueAndValidity();
+  }
+
+  onFileSelect(event: any) {
+    const file = this.artistForm.get('image').value.files[0] as File;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imageURL = reader.result as string;
+    };
+    reader.readAsDataURL(file);
+  }
+
   isFormInvalid() {
     if (this.loading || (!this.validating && !this.artistForm.valid)) {
       return true;
@@ -92,45 +110,15 @@ export class ArtistEditComponent implements OnInit {
     return false;
   }
 
-  onFileChange(event: any) {
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      this.imageFile = file;
-    } else {
-      this.imageFile = null;
-    }
-    //console.info(event, event.srcElement.files[0]);
-    //console.info(this.fileInput);
-
-    //this.imageLoaded = true;
-    //console.info(this.fileInput);
-    //this.imageFile = this.fileInput.nativeElement.files[0];
-    //console.log(this.imageFile);
-  }
-
   submit() {
-    const artistUpdateDTO = new ArtistPostDTO(
-      this.artistForm.value.name,
-      this.artistForm.value.summary,
-      (this.artistForm.get('image').value as FileInput).files[0]
-    );
-
-    //const file = this.fileInput.nativeElement.files[0] as File;
-
     const formData = new FormData();
     formData.append('name', this.artistForm.value.name);
     formData.append('summary', this.artistForm.value.summary);
-    formData.append('image', this.imageFile);
-
-    //this.artistForm.get('image').value.files[0] as File
-
-    console.log(this.imageFile, this.artistForm.get('image').value.files[0] as File);
+    formData.append('image', this.artistForm.get('image').value.files[0] as File);
 
     if (this.isEdit) {
       this.artistService.updateArtist(this.id, formData).subscribe((data: Artist) => {
-        if (data.id === this.id) {
-          this.dialogRef.close(true);
-        }
+        this.dialogRef.close(true);
       });
     } else {
       this.artistService.addArtist(formData).subscribe((data: Artist) => {

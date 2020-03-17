@@ -1,13 +1,10 @@
 //@import '~@angular/material/theming';
 
-.mat-grid-list {
-  margin-top: 1em;
-}
-
-.internal-grid{  
-  height:100%;
-}
-
-.mat-grid-tile .mat-figure {
-  align-items: normal !important;
+.col {
+  width:200px;
+  margin:0 1em;
+  
+  &:first-child {
+    margin-left:0;
+  }
 }

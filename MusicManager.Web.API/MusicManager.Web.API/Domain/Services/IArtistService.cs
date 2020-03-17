@@ -12,7 +12,7 @@ namespace MusicManager.Web.API.Domain.Services
 		Task<IEnumerable<Artist>> ListAsync();
 		Task<IEnumerable<Artist>> ListActiveAsync();
 		Task<ArtistResponse> SaveAsync(Artist artist);
-		Task<ArtistResponse> UpdateAsync(int id, Artist artist);
+		Task<ArtistResponse> UpdateAsync(int id, Artist artist, string filename);
 		Task<ArtistResponse> DeleteAsync(int id);
 		Task<ArtistResponse> GetByIdAsync(int id);
 		Task<Artist> GetByNameAsync(string name);

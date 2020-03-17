@@ -7,33 +7,23 @@ import { AlbumEditComponent } from './pages/albums/album-edit/album-edit.compone
 
 import { ArtistListComponent } from './pages/artists/artist-list/artist-list.component';
 import { ArtistViewComponent } from './pages/artists/artist-view/artist-view.component';
-import { ArtistEditComponent } from './pages/artists/artist-edit/artist-edit.component';
-
-import { TrackListComponent } from './pages/tracks/track-list/track-list.component';
-import { TrackViewComponent } from './pages/tracks/track-view/track-view.component';
-import { TrackEditComponent } from './pages/tracks/track-edit/track-edit.component';
-
 import { GenreListComponent } from './pages/genres/genre-list/genre-list.component';
-import { GenreEditComponent } from './pages/genres/genre-edit/genre-edit.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/artist/list', pathMatch: 'full' },
+  { path: '', redirectTo: 'artist/list', pathMatch: 'full' },
 
   { path: 'genre/list', component: GenreListComponent },
 
   { path: 'artist/list', component: ArtistListComponent },
-  { path: 'artist/:id', component: ArtistViewComponent},
-  { path: 'artist/:id/edit', component: ArtistEditComponent},
-  { path: 'artist/add', component: ArtistEditComponent},
+  { path: 'artist/:artistId', component: ArtistViewComponent},
+  { path: 'artist/:artistId/album/:albumId', component: ArtistViewComponent},
+  { path: 'artist/:artistId/album/:albumId/edit', component: ArtistViewComponent},
+  { path: 'artist/:artistId/add-album', component: ArtistViewComponent},
 
   { path: 'album/list', component: AlbumListComponent },
   { path: 'album/:id', component: AlbumViewComponent},
   { path: 'album/:id/edit', component: AlbumEditComponent},
   { path: 'album/add', component: AlbumEditComponent},
-
-  { path: 'track/list', component: TrackListComponent },
-  { path: 'album/:id/tracks', component: TrackListComponent},
-  { path: 'album/:id/tracks/edit', component: TrackEditComponent}
 ];
 
 @NgModule({

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MusicManager.Web.API.Migrations
 {
-    public partial class InitDb : Migration
+    public partial class initCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,7 +14,7 @@ namespace MusicManager.Web.API.Migrations
                     GenreId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(maxLength: 300, nullable: true),
-                    DateAdded = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 3, 15, 17, 23, 8, 23, DateTimeKind.Local).AddTicks(6480)),
+                    DateAdded = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 3, 17, 8, 1, 48, 424, DateTimeKind.Local).AddTicks(7139)),
                     DateModified = table.Column<DateTime>(nullable: true),
                     DateDeleted = table.Column<DateTime>(nullable: true)
                 },
@@ -30,7 +30,8 @@ namespace MusicManager.Web.API.Migrations
                     ImageRefId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     URI = table.Column<string>(nullable: true),
-                    DateAdded = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 3, 15, 17, 23, 8, 2, DateTimeKind.Local).AddTicks(7019)),
+                    DateAdded = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 3, 17, 8, 1, 48, 402, DateTimeKind.Local).AddTicks(3526)),
+                    DateModified = table.Column<DateTime>(nullable: true),
                     DateDeleted = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
@@ -47,7 +48,7 @@ namespace MusicManager.Web.API.Migrations
                     ImageRefId = table.Column<int>(nullable: true),
                     Name = table.Column<string>(maxLength: 300, nullable: true),
                     Summary = table.Column<string>(maxLength: 2000, nullable: true),
-                    DateAdded = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 3, 15, 17, 23, 8, 37, DateTimeKind.Local).AddTicks(8743)),
+                    DateAdded = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 3, 17, 8, 1, 48, 438, DateTimeKind.Local).AddTicks(8657)),
                     DateModified = table.Column<DateTime>(nullable: true),
                     DateDeleted = table.Column<DateTime>(nullable: true)
                 },
@@ -73,7 +74,7 @@ namespace MusicManager.Web.API.Migrations
                     Name = table.Column<string>(maxLength: 300, nullable: false),
                     ReleaseDate = table.Column<DateTime>(nullable: false),
                     Summary = table.Column<string>(maxLength: 2000, nullable: true),
-                    DateAdded = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 3, 15, 17, 23, 8, 46, DateTimeKind.Local).AddTicks(8595)),
+                    DateAdded = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 3, 17, 8, 1, 48, 446, DateTimeKind.Local).AddTicks(3252)),
                     DateModified = table.Column<DateTime>(nullable: true),
                     DateDeleted = table.Column<DateTime>(nullable: true)
                 },
@@ -102,7 +103,7 @@ namespace MusicManager.Web.API.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     AlbumId = table.Column<int>(nullable: false),
                     GenreId = table.Column<int>(nullable: false),
-                    DateAdded = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 3, 15, 17, 23, 8, 64, DateTimeKind.Local).AddTicks(8163)),
+                    DateAdded = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 3, 17, 8, 1, 48, 464, DateTimeKind.Local).AddTicks(6794)),
                     DateDeleted = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
@@ -132,7 +133,7 @@ namespace MusicManager.Web.API.Migrations
                     Position = table.Column<int>(nullable: false),
                     Duration = table.Column<int>(nullable: false),
                     Name = table.Column<string>(maxLength: 300, nullable: true),
-                    DateAdded = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 3, 15, 17, 23, 8, 57, DateTimeKind.Local).AddTicks(1945)),
+                    DateAdded = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 3, 17, 8, 1, 48, 456, DateTimeKind.Local).AddTicks(9830)),
                     DateModified = table.Column<DateTime>(nullable: true),
                     DateDeleted = table.Column<DateTime>(nullable: true)
                 },
@@ -163,16 +164,16 @@ namespace MusicManager.Web.API.Migrations
 
             migrationBuilder.InsertData(
                 table: "ImageRef",
-                columns: new[] { "ImageRefId", "DateDeleted", "URI" },
+                columns: new[] { "ImageRefId", "DateDeleted", "DateModified", "URI" },
                 values: new object[,]
                 {
-                    { 1, null, "images/20200309_Born_to_Run_(Front_Cover).jpg" },
-                    { 2, null, "images/20200309_Bruce_Springsteen_-_Nebraska.jpg" },
-                    { 3, null, "images/20200309_bruce-springsteen-260-260.jpg" },
-                    { 4, null, "images/20200309_In_the_Passing_Light_of_Day_Cover.jpg" },
-                    { 5, null, "images/20200309_NFO.jpg" },
-                    { 6, null, "images/20200309_PainOfSalvation.jpg" },
-                    { 7, null, "images/20200309-NFO_Internal_Affairs.jpg" }
+                    { 1, null, null, "images/20200309_Born_to_Run_(Front_Cover).jpg" },
+                    { 2, null, null, "images/20200309_Bruce_Springsteen_-_Nebraska.jpg" },
+                    { 3, null, null, "images/20200309_bruce-springsteen-260-260.jpg" },
+                    { 4, null, null, "images/20200309_In_the_Passing_Light_of_Day_Cover.jpg" },
+                    { 5, null, null, "images/20200309_NFO.jpg" },
+                    { 6, null, null, "images/20200309_PainOfSalvation.jpg" },
+                    { 7, null, null, "images/20200309-NFO_Internal_Affairs.jpg" }
                 });
 
             migrationBuilder.InsertData(

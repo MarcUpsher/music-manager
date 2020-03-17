@@ -47,20 +47,22 @@ namespace MusicManager.Web.API.Services
 			return await _artistRepository.FindByNameAsync(name);
 		}
 
-		public async Task<ArtistResponse> SaveAsync(Artist Artist)
+		public async Task<ArtistResponse> SaveAsync(Artist artist)
 		{
 			try
 			{
-				await _artistRepository.AddAsync(Artist);
+				artist.DateAdded = DateTime.Now;
+
+				await _artistRepository.AddAsync(artist);
 				await _unitOfWork.CompleteAsync();
 
-				return new ArtistResponse(Artist);
+				return new ArtistResponse(artist);
 			} catch (Exception ex) {
 				return new ArtistResponse($"An error occurred when saving the artist, exception: {ex.Message}");
 			}
 		}
 
-		public async Task<ArtistResponse> UpdateAsync(int id, Artist Artist)
+		public async Task<ArtistResponse> UpdateAsync(int id, Artist Artist, string filename)
 		{
 			var existingArtist = await _artistRepository.FindByIdAsync(id);
 
@@ -71,6 +73,7 @@ namespace MusicManager.Web.API.Services
 
 			existingArtist.Name = Artist.Name;
 			existingArtist.DateModified = DateTime.Now;
+			existingArtist.ImageRef.URI = filename;
 
 			try
 			{

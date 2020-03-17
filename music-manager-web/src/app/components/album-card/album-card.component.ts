@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Album } from '../../models/album';
+import { EventService } from '../../shared/event.service';
 
 @Component({
   selector: 'app-album-card',
@@ -9,9 +10,9 @@ import { Album } from '../../models/album';
 })
 export class AlbumCardComponent implements OnInit {
   @Input() album: Album;
-  @Output() albumOutput = new EventEmitter<Album>();
 
   constructor(
+    public eventService: EventService
   ) {
   }
 
@@ -19,6 +20,6 @@ export class AlbumCardComponent implements OnInit {
   }
 
   onClick() {
-    this.albumOutput.emit(this.album);
+    this.eventService.emitViewAlbumEvent(this.album);
   }
 }

@@ -1,12 +1,78 @@
 //@import '~@angular/material/theming';
 
-.internal-grid {
-  width:100%;
-  height:100%;
+.app-content {
+  .col {
+    margin:0 1em;
+    &:first-child {
+      margin-left:0;
+    }
+  }
+
+  .col-1 {
+    width:400px;
+  }
+
+  .col-2 {
+    width:50%
+  }
+
+  .mat-card {
+    background:none;
+    box-shadow: none;
+    padding-left:0;
+    .mat-card-image {
+      max-width:300px;
+      margin:0;
+    }
+  }
+
+  .image-preview {
+    overflow: hidden;  
+    img {
+      max-width:300px;
+    }
+  }
+  
+  .image-clear {
+    margin-bottom:1em;
+  }
+
+  .release-date {
+    margin-bottom:1em;
+  }
 }
 
-.mat-card-image {
-  max-width:300px;
+.tracks {
+  border:1px solid #eee;
+  width:100%;
+
+  .mat-column-actions {
+    text-align: right;
+  }
+
+  .cdk-column-duration {
+    width:100px;
+  }
+
+  .cdk-drag-preview {
+    box-sizing: border-box;
+    border-radius: 4px;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+                0 8px 10px 1px rgba(0, 0, 0, 0.14),
+                0 3px 14px 2px rgba(0, 0, 0, 0.12);
+  }
+  
+  .cdk-drag-placeholder {
+    opacity: 0;
+  }
+  
+  .cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+  
+  .handle {
+    cursor:pointer;
+  }
 }
 
 .album-form {
@@ -23,30 +89,5 @@
       width:100px;
     }
   }
-
-  .tracks-tile {
-    .mat-form-field {
-      width:95%;
-    }
-  }
 }
 
-.cdk-drag-preview {
-  box-sizing: border-box;
-  border-radius: 4px;
-  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
-              0 8px 10px 1px rgba(0, 0, 0, 0.14),
-              0 3px 14px 2px rgba(0, 0, 0, 0.12);
-}
-
-.cdk-drag-placeholder {
-  opacity: 0;
-}
-
-.cdk-drag-animating {
-  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-}
-
-.handle {
-  cursor:pointer;
-}

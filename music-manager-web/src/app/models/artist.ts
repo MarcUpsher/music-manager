@@ -4,6 +4,7 @@ export class BaseArtist {
   id: number;
   name: string;
   summary: string;
+  imageUriId: number;
   imageUri: string;
 }
 
@@ -18,6 +19,7 @@ export class ArtistWithAlbums extends BaseArtist {
 export class ArtistPostDTO {
   name: string;
   summary: string;
+  imageUriId: number;
   image: File;
 
   constructor(name = '', summmary = '', image: any) {

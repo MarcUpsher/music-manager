@@ -8,14 +8,10 @@
     </mat-card-actions>
   </mat-card>
 
-  <div class="app-content">
-    <mat-grid-list cols="8" rowHeight="320px">
-      <mat-grid-tile *ngFor="let artist of artists" [colspan]="1" [rowspan]="1">
-        <div class="internal-grid">
-          <app-artist-card [artist]="artist"></app-artist-card>
-        </div>
-      </mat-grid-tile>
-    </mat-grid-list>
+  <div class="app-content" fxLayout="row" fxLayoutAlign="">
+    <div *ngFor="let artist of artists;let i = index" class="col" >
+      <app-artist-card [artist]="artist"></app-artist-card>
+    </div>
   </div>
 
 </div>

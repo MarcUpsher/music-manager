@@ -22,8 +22,7 @@ export class NavMenuComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.sections.push(new LinkSection('Artists', [new Link('List', '/artist/list'), new Link('Add', '/artist/add')]));
-    this.sections.push(new LinkSection('Albums', [new Link('List', '/album/list'), new Link('Add', '/album/add')]));
-    this.sections.push(new LinkSection('Genres', [new Link('List', '/genre/list'), new Link('Maintain', '/genre/Maintain')]));
+    this.sections.push(new LinkSection('Artists', [new Link('List', '/artist/list')]));
+    this.sections.push(new LinkSection('Genres', [new Link('List', '/genre/list')]));
   }
 }

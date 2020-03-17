@@ -16,6 +16,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatListModule } from '@angular/material/list';
+import { MatChipsModule } from '@angular/material/chips';
 
 const materialModules = [
   MatTableModule,
@@ -33,7 +34,8 @@ const materialModules = [
   MatIconModule,
   MatSidenavModule,
   MatMenuModule,
-  MatListModule
+  MatListModule,
+  MatChipsModule
 ];
 
 @NgModule({

@@ -20,21 +20,6 @@ namespace MusicManager.Web.API.Services
 			_unitOfWork = unitOfWork;
 		}
 
-		public async Task<ImageRefResponse> HandleImageAsync(ImageRef imageRef)
-		{
-			try
-			{
-				await _imageRefRepository.AddAsync(imageRef);
-				await _unitOfWork.CompleteAsync();
-
-				return new ImageRefResponse(imageRef);
-			}
-			catch (Exception ex)
-			{
-				return new ImageRefResponse($"An error occurred when saving the ImageRef, exception: {ex.Message}");
-			}
-		}
-
 		public async Task<ImageRefResponse> SaveAsync(ImageRef imageRef)
 		{
 			try
@@ -45,6 +30,31 @@ namespace MusicManager.Web.API.Services
 				return new ImageRefResponse(imageRef);
 			} catch (Exception ex) {
 				return new ImageRefResponse($"An error occurred when saving the ImageRef, exception: {ex.Message}");
+			}
+		}
+
+		public async Task<ImageRefResponse> UpdateAsync(int id, ImageRef imageRef)
+		{
+			var existingImageRef = await _imageRefRepository.FindByIdAsync(id);
+
+			if (existingImageRef == null)
+			{
+				return new ImageRefResponse("Genre not found.");
+			}
+
+			existingImageRef.URI = imageRef.URI;
+			existingImageRef.DateModified = DateTime.Now;
+
+			try
+			{
+				_imageRefRepository.Update(existingImageRef);
+				await _unitOfWork.CompleteAsync();
+
+				return new ImageRefResponse(existingImageRef);
+			}
+			catch (Exception ex)
+			{
+				return new ImageRefResponse($"An error occurred when updating the image ref, exception: {ex.Message}");
 			}
 		}
 	}

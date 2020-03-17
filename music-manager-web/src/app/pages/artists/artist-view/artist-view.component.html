@@ -2,46 +2,32 @@
 <div *ngIf="!loading">
   <app-page-header [title]="title"></app-page-header>
 
-  <mat-card class="page-actions">
-    <mat-card-actions>
-      <button mat-stroked-button color="primary" [routerLink]="['/artist','list']">Back</button>
-      <button mat-stroked-button color="primary" (click)="showEditDialog()">Edit artist</button>
-    </mat-card-actions>
-  </mat-card>
+  <div class="app-content" fxLayout="row" fxLayoutAlign="space-between">
+    <div class="col col-1">
+      <mat-card class="page-actions">
+        <mat-card-actions>
+          <button mat-stroked-button color="primary" [routerLink]="['/artist','list']">Back</button>
+          <button mat-stroked-button color="primary" (click)="showEditDialog()">Edit artist</button>
+          <button mat-stroked-button color="primary" (click)="showAddAlbum()">Add album</button>
+        </mat-card-actions>
+      </mat-card>
 
-  <div class="app-content">
-    <mat-grid-list cols="4" rowHeight="1:1">
-      <mat-grid-tile [colspan]="1" [rowspan]="1" class="artist-tile">
-        <div class="internal-grid">
-          <mat-card class="artist-card">
-            <div class="image-container">
-              <img *ngIf="artist.imageUri" mat-card-image src="{{artist.imageUri}}" alt="{{artist.name}}">
-              <div *ngIf="!artist.imageUri" class="no-image-found"><mat-icon>broken_image</mat-icon></div>    
-            </div>
-          </mat-card>
-          <mat-content>
-            <p>Summary</p>
-            <p>{{artist.summary || 'No summary yet!'}}</p>
-          </mat-content>
-        </div>
-      </mat-grid-tile>
-      <mat-grid-tile [colspan]="3" [rowspan]="1" class="album-tile">
-        <div class="internal-grid">
-          <div *ngIf="artist.albums.length > 0">
-            <mat-grid-list cols="5" rowHeight="400px" *ngIf="!showAlbum">
-              <mat-grid-tile *ngFor="let album of artist.albums" [colspan]="1" [rowspan]="1">
-                <div class="internal-grid">
-                  <app-album-card [album]="album" (albumOutput)="onAlbumClick($event)"></app-album-card>
-                </div>
-              </mat-grid-tile>
-            </mat-grid-list>
-            <app-album-view *ngIf="showAlbum" [album]="album" (closeView)="onCloseView()"></app-album-view>
+      <mat-card class="artist-card">
+        <div class="image-container">
+          <img *ngIf="artist.imageUri" mat-card-image src="{{artist.imageUri}}" alt="{{artist.name}}">
+          <div *ngIf="!artist.imageUri" class="no-image-found">
+            <mat-icon>broken_image</mat-icon>
           </div>
-          <div *ngIf="artist.albums.length === 0">No albums loaded yet!</div>
-          
         </div>
-      </mat-grid-tile>
-    </mat-grid-list>
+        <mat-content>
+          <p>{{artist.summary || 'No summary yet!'}}</p>
+        </mat-content>
+      </mat-card>     
+    </div>
+    <div class="col col-2">
+      <app-album-list *ngIf="showAlbumList" [albums]="artist.albums"></app-album-list>
+      <app-album-view *ngIf="showAlbum" [album]="album" (closeAlbumView)="onCloseAlbumView()"></app-album-view>
+      <app-album-edit *ngIf="addOrEditAlbum" [artist]="artist" [album]="album" (closeAlbumView)="onCloseAlbumView()"></app-album-edit>
+    </div>
   </div>
-
 </div>
