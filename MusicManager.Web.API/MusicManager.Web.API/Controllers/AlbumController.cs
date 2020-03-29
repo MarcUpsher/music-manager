@@ -10,6 +10,8 @@ using MusicManager.Web.API.Database.Contexts;
 using MusicManager.Web.API.Domain.Models;
 using MusicManager.Web.API.Domain.Models.DTO;
 using MusicManager.Web.API.Domain.Services;
+using Newtonsoft;
+using Newtonsoft.Json;
 
 namespace MusicManager.Web.API.Controllers
 {
@@ -35,6 +37,22 @@ namespace MusicManager.Web.API.Controllers
 			// Hack
 			foreach (var albumDTO in albumsDTO)
 			{				
+				albumDTO.ImageUri = Helpers.GetImageUri(Request, albumDTO.ImageUri);
+			}
+
+			return albumsDTO;
+		}
+
+		[HttpGet("albumsbyartist")]
+		public async Task<IEnumerable<AlbumDTO>> GetAsyncByArtist(int artistId)
+		{
+			var albums = await _albumService.GetByArtistAsync(artistId);
+
+			var albumsDTO = _mapper.Map<IEnumerable<Album>, IEnumerable<AlbumDTO>>(albums);
+
+			// Hack
+			foreach (var albumDTO in albumsDTO)
+			{
 				albumDTO.ImageUri = Helpers.GetImageUri(Request, albumDTO.ImageUri);
 			}
 
@@ -81,6 +99,8 @@ namespace MusicManager.Web.API.Controllers
 			if (!ModelState.IsValid)
 				return BadRequest(ModelState.GetErrorMessages());
 
+			var album = _mapper.Map<AlbumPostDTO, Album>(albumPostDTO);
+
 			var image = albumPostDTO.Image;
 
 			var fileName = $"{Path.GetRandomFileName()}{Path.GetExtension(image.FileName)}";
@@ -91,13 +111,22 @@ namespace MusicManager.Web.API.Controllers
 				await image.CopyToAsync(fileStream);
 			}
 
-			var album = _mapper.Map<AlbumPostDTO, Album>(albumPostDTO);
-
 			album.ImageRef = new ImageRef()
 			{
 				URI = $"images/{fileName}",
 				DateAdded = DateTime.Now
 			};
+
+			var genresArr = JsonConvert.DeserializeObject<int[]>(albumPostDTO.Genres);
+
+			foreach (var genreId in genresArr)
+			{
+				album.AlbumGenres.Add(new AlbumGenre() { GenreId = genreId });
+			}			
+
+			var trackDTOs = JsonConvert.DeserializeObject<List<TrackDTO>>(albumPostDTO.Tracks);			
+
+			album.Tracks = _mapper.Map<List<TrackDTO>, List<Track>>(trackDTOs);
 
 			var result = await _albumService.SaveAsync(album);
 

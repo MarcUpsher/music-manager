@@ -1,7 +1,7 @@
 <app-loader *ngIf="loading"></app-loader>
 <div *ngIf="!loading">  
   <div class="app-content">
-    <div fxLayout="row">
+    <div fxLayout="row wrap" fxLayout.xs="column">
       <ng-container *ngIf="albums.length > 0">
         <div *ngFor="let album of albums" class="col">
           <app-album-card [album]="album" (albumCardOutput)="onAlbumCardClick($event)"></app-album-card>

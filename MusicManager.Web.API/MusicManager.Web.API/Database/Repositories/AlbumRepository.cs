@@ -38,7 +38,7 @@ namespace MusicManager.Web.API.Database.Repositories
 		{
 			var albums = await ListActiveAsync();
 
-			return albums.Where(w => w.ArtistId == id).ToList();
+			return albums.Where(w => w.ArtistId == id && w.DateDeleted == null).ToList();
 		}
 
 		public async Task AddAsync(Album Album)
@@ -51,9 +51,12 @@ namespace MusicManager.Web.API.Database.Repositories
 			return await _context.Albums
 									.Include(w => w.ImageRef)
 									.Include(w => w.Tracks)
+									.Include(w => w.AlbumGenres)
+										.ThenInclude(w => w.Genre)
 									.Include(w => w.Artist)
 									.Where(w => w.AlbumId == id)
 									.Where(t => t.Tracks.Any(x => x.DateDeleted == null))
+									.Where(t => t.AlbumGenres.Any(x => x.DateDeleted == null))
 									.FirstOrDefaultAsync();
 		}
 

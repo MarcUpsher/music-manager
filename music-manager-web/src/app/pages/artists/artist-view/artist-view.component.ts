@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ArtistEditComponent } from '../artist-edit/artist-edit.component';
 import { Location } from '@angular/common';
 import { EventService } from '../../../shared/event.service';
+import { AlbumService } from '../../albums/album.service';
 
 @Component({
   selector: 'app-artist-view',
@@ -29,6 +30,7 @@ export class ArtistViewComponent implements OnInit {
 
   constructor(
     public artistService: ArtistService,
+    public albumService: AlbumService,
     public eventService: EventService,
     public activatedRoute: ActivatedRoute,
     public router: Router,
@@ -38,14 +40,14 @@ export class ArtistViewComponent implements OnInit {
     this.artistId = this.activatedRoute.snapshot.params.artistId;
     this.albumId = this.activatedRoute.snapshot.params.albumId;
 
-    if (this.activatedRoute.snapshot.url.length === 3 
+    if (this.activatedRoute.snapshot.url.length === 3
       && this.activatedRoute.snapshot.url[2].toString().toLowerCase() === 'add-album') {
-        this.isAdd = true;
+      this.isAdd = true;
     }
 
-    if (this.activatedRoute.snapshot.url.length === 5 
+    if (this.activatedRoute.snapshot.url.length === 5
       && this.activatedRoute.snapshot.url[4].toString().toLowerCase() === 'edit') {
-        this.isEdit = true;
+      this.isEdit = true;
     }
   }
 
@@ -98,9 +100,9 @@ export class ArtistViewComponent implements OnInit {
 
   updateUrl(params: any[]) {
     const url = this
-    .router
-    .createUrlTree(params)
-    .toString();
+      .router
+      .createUrlTree(params)
+      .toString();
 
     this.location.go(url);
   }
@@ -115,13 +117,26 @@ export class ArtistViewComponent implements OnInit {
 
       if (this.isAdd || this.isEdit) {
         this.switchViews('addOrEdit');
-      } else if (parseInt(this.albumId, 10) > 0) {
+      } else if (this.albumId != null && parseInt(this.albumId, 10) > 0) {
         this.album = this.artist.albums.find(item => item.id == this.albumId); // === fails comparison
         if (this.album != null) {
           this.switchViews('view');
         }
+      } else {
+        this.switchViews('list');
       }
 
+      this.loading = false;
+    });
+  }
+
+  getAlbums() {
+    this.loading = true;
+    console.info('here');
+    this.albumService.getAlbumsByArtistId(this.artistId).subscribe((data: Album[]) => {
+      console.info(data);
+      this.artist.albums = data;
+      console.info(this.artist);
       this.loading = false;
     });
   }
@@ -150,8 +165,12 @@ export class ArtistViewComponent implements OnInit {
     this.switchViews('addOrEdit');
   }
 
-  onCloseView() {
-    this.switchViews('list');
+  onCloseView(refresh: boolean = false) {
+    if (refresh) {
+      this.getAlbums();
+    } else {
+      this.switchViews('list');
+    }
   }
 }
 

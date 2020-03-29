@@ -29,6 +29,14 @@ export class AlbumService {
     );
   }
 
+  getAlbumsByArtistId(artistId: number): Observable<Album[]> {
+    return this.httpClient.get<Album[]>(this.url + '/api/albumsbyartist/' + artistId)
+    .pipe(
+      retry(1),
+      catchError(this.errorHandler)
+    );
+  }
+
   getAlbum(id: number): Observable<Album> {
     return this.httpClient.get<Album>(this.url + '/api/albums/' + id)
     .pipe(

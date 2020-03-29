@@ -30,7 +30,7 @@ import { MatChipInputEvent } from '@angular/material/chips';
 export class AlbumEditComponent implements OnInit {
   @Input() artist: Artist;
   @Input() album: Album = null;
-  @Output() closeAlbumView = new EventEmitter<true>();
+  @Output() closeAlbumView = new EventEmitter<any>();
   loading = true;
   albumForm: FormGroup;
   availableArtists: FilterItem[] = [];
@@ -303,16 +303,20 @@ export class AlbumEditComponent implements OnInit {
 
     if (this.isEdit) {
       this.albumService.updateAlbum(this.album.id, formData).subscribe((data: Album) => {
+        if (data != null && data.id > 0) {
+          this.eventService.emitViewAlbumEvent(this.album);
+        }
       });
     } else {
       this.albumService.addAlbum(formData).subscribe((data: Album) => {
         if (data != null && data.id > 0) {
+          this.closeAlbumView.emit(true);
         }
       });
     }
 
 
-    return;
+    /*
     const albumPost: AlbumPost = {
       id: this.album.id.toString(),
       name: this.albumForm.value.name,
@@ -329,6 +333,7 @@ export class AlbumEditComponent implements OnInit {
     this.albumService.updateAlbum(this.album.id, albumPost).subscribe((data: Album) => {
       this.backToAlbum();
     });
+    */
   }
 
   backToAlbum() {
@@ -336,7 +341,7 @@ export class AlbumEditComponent implements OnInit {
   }
 
   onCloseView() {
-    this.closeAlbumView.emit(true);
+    this.closeAlbumView.emit(false);
   }
 
   /* Genres */

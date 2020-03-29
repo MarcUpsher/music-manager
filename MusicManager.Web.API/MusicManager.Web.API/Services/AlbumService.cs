@@ -52,14 +52,28 @@ namespace MusicManager.Web.API.Services
 			return await _albumRepository.FindByNameAsync(name);
 		}
 
-		public async Task<AlbumResponse> SaveAsync(Album Album)
+		public async Task<AlbumResponse> SaveAsync(Album album)
 		{
 			try
 			{
-				await _albumRepository.AddAsync(Album);
+				foreach (var albumGenre in album.AlbumGenres)
+				{
+					albumGenre.DateAdded = DateTime.Now;
+				}
+
+				foreach (var track in album.Tracks)
+				{
+					track.DateAdded = DateTime.Now;
+				}
+
+				album.DateAdded = DateTime.Now;
+
+				await _albumRepository.AddAsync(album);
 				await _unitOfWork.CompleteAsync();
 
-				return new AlbumResponse(Album);
+				var albumResponse = await GetByIdAsync(album.AlbumId);
+
+				return new AlbumResponse(albumResponse.Album);
 			} catch (Exception ex) {
 				return new AlbumResponse($"An error occurred when saving the album, exception: {ex.Message}");
 			}

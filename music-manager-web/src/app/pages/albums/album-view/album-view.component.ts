@@ -13,7 +13,7 @@ import { EventService } from 'src/app/shared/event.service';
 })
 export class AlbumViewComponent implements OnInit {
   @Input() album: Album;
-  @Output() closeAlbumView = new EventEmitter<true>();
+  @Output() closeAlbumView = new EventEmitter<any>();
   loading = true;
   albumId: number;
   showEdit = false;
@@ -39,6 +39,6 @@ export class AlbumViewComponent implements OnInit {
   }
 
   onCloseView() {
-    this.closeAlbumView.emit(true);
+    this.closeAlbumView.emit(false);
   }
 }
